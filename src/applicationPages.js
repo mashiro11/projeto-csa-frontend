@@ -1,5 +1,9 @@
 const applicationPages = {
-  ABOUT_CSA: {
+  HOME:{
+    text: "Inicio",
+    link: "/"
+  },
+  WHAT_IS: {
     text: "O que é CSA",
     link: "/o-que-e-csa"
   },
@@ -13,7 +17,7 @@ const applicationPages = {
   },
   TOPICS: {
     text:"Conversas",
-    link: "/topicos"
+    link: "/conversas"
   },
   ABOUT:{
       text: "Sobre o site",

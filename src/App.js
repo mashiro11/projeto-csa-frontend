@@ -6,15 +6,23 @@ import Navbar from './components/Navbar'
 
 //Application main pages
 import Home from './Pages/Home'
+import About from './Pages/About'
+import Csas from './Pages/Csas'
+import Routines from './Pages/Routines'
+import Topics from './Pages/Topics'
+import WhatIs from './Pages/WhatIs'
 
 function App() {
   return (
     <div className="App">
         <Navbar />
         <Switch>
-          <Route path="/">
-            <Home />
-          </Route>
+          <Route exact path="/" component={Home} />
+          <Route path="/sobre" component={About} />
+          <Route exact path="/csas" component={Csas} />
+          <Route exact path="/rotinas" component={Routines} />
+          <Route exact path="/conversas" component={Topics} />
+          <Route exact path="/o-que-e-csa" component={WhatIs} />
         </Switch>
     </div>
   );
