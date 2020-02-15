@@ -3,30 +3,33 @@ import { Link } from 'react-router-dom'
 
 import applicationPages from '../../applicationPages'
 
-const styles = {
-  container: {
-    display: 'flex',
-    height: 100,
-    backgroundColor: '#DDDDDD'
-  },
-  linksContainer:{
-  }
-}
+import noLoginUser from './noLoginUser.svg'
+import Logo from './Logo.svg'
+
+import styles from './styles.js'
 
 const Navbar = () => {
   return (
-    <div style={styles.container}>
-      <div>
-        CSA Dev
+    <div>
+      <div style={styles.container}>
+
+        <img src={Logo} style={styles.logo} />
+
+        <div style={styles.linksUser}>
+
+          <div style={styles.linksContainer}>
+            {Object.values(applicationPages).map( (item, index) =>
+              <Link style={styles.pageLink} to={item.link} key={index} >{item.text}</Link>
+             )}
+          </div>
+          <img src={noLoginUser} style={styles.userIcon} />
+
+        </div>
+
       </div>
-      <div style={styles.linksContainer}>
-        {Object.values(applicationPages).map( (item, index) =>
-          <Link to={item.link}>{item.text}</Link>
-         )}
-      </div>
-      <div>
-        Login / User
-      </div>
+
+      {/*Prevent divs from positioning under navbar at top*/}
+      <div style={styles.spacer}></div>
     </div>
   )
 }

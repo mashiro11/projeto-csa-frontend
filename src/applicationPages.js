@@ -1,8 +1,4 @@
 const applicationPages = {
-  HOME:{
-    text: "Inicio",
-    link: "/"
-  },
   WHAT_IS: {
     text: "O que é CSA",
     link: "/o-que-e-csa"
