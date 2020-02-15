@@ -9,9 +9,10 @@ const styles = {
     left: '0',
     width: '100%',
     height: 61,
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#EEEEEE',
     fontSize: 14,
-    fontFamily: 'Roboto'
+    fontFamily: 'Roboto',
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
   },
   logo:{
     position: 'relative',
