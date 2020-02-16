@@ -23,11 +23,11 @@ const Navbar = () => {
     <div>
       <div style={styles.container}>
         {layout === 'MOBILE' ?
-          <img src={menu} style={styles.menuIcon} /> : null
+          <img src={menu} style={styles.menuIcon} alt='menu'/> : null
         }
 
           <Link style={layout === 'DESKTOP'? styles.logoD : styles.logoM} to='/'>
-            <img src={Logo} style={{textAlign: 'inherit'}}/>
+            <img src={Logo} style={{textAlign: 'inherit'}} alt='CSAs Brasília'/>
           </Link>
 
           <div style={styles.linksUser}>
@@ -40,7 +40,7 @@ const Navbar = () => {
               </div>
             : null}
 
-            <img src={noLoginUser} style={styles.userIcon} />
+            <img src={noLoginUser} style={styles.userIcon} alt='user' />
           </div>
 
 
