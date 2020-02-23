@@ -1,10 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
+const styles = {
+
+  hr:{
+    backgroundColor: '#EEEEEE',
+    color: '#EEEEEE',
+    borderColor: '#FFFFFF'
+  }
+}
 
 const TopicListItem = ({topic}) => {
   return(
     <div>
-      <div>{topic.name}</div>
-      <hr/>
+      <Link to={`conversas/${topic.id}`}>{topic.name}</Link>
+      <hr style={styles.hr}/>
     </div>
   )
 }
