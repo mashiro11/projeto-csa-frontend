@@ -4,14 +4,38 @@ import request from '../../request.js'
 
 import TopicListItem from '../../components/TopicListItem'
 
+import banner from './banner.jpg'
+
 const styles = {
+  bannerContainer:{
+    display: 'flex',
+    alignItems: 'center',
+    backgroundImage: `url(${banner})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    minHeight: 190,
+    maxHeight: 250
+  },
+  bannerTitle:{
+    display: 'inline-block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    borderRadius: 5,
+    textAlign: 'center',
+    backgroundColor: 'white',
+    height: 25,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 15,
+    paddingRight: 15
+  },
   filters:{
     cursor: 'pointer',
     color: '#009688',
     backgroundColor: '#EEEEEE',
     paddingTop: 10,
     paddingBottom: 10,
-    paddingLeft: 10
+    paddingLeft: 20
   },
   filterQuant:{
     display: 'inline-block',
@@ -25,6 +49,7 @@ const styles = {
   },
   header:{
     display: 'flex',
+    justifyContent: 'space-between',
     color: '#DF8400',
     fontStyle: 'normal',
     fontWeight: 500,
@@ -42,6 +67,9 @@ const Topics = () => {
 
   return (
     <div>
+      <div style={styles.bannerContainer}>
+        <div style={styles.bannerTitle}>CONVERSAS</div>
+      </div>
       <div style={styles.filters}>
         <span>Filtros</span>
         <span> </span>
@@ -60,7 +88,7 @@ const Topics = () => {
         )}
       </div>
 
-      <div>Nova Conversa</div>
+      <div className='button'>NOVA CONVERSA</div>
     </div>
   )
 }

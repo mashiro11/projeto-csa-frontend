@@ -8,8 +8,9 @@ const Topic = (props) => {
     console.log('error:', error)
   }
 
-  useEffect( () => request(`topics/${props.match.params.id}`, setTopic, handleError), [])
-  
+  useEffect( () => request(`topics/${props.match.params.id}`, setTopic, handleError),
+            [props.match.params.id])
+
   return(
     <div>
       {topic.id ?

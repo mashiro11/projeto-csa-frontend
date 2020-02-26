@@ -5,16 +5,21 @@ const styles = {
   container:{
     position:'relative',
     display:'flex',
-    flexDirection: 'horizontal'
+    flexDirection: 'horizontal',
+    paddingLeft: 20,
+    paddingRight: 20,
+    justifyContent: 'space-between'
   },
   responses:{
     color: '#000000'
   },
   latestUpdate:{
+    alignSelf: 'flex-end',
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'center',
     color: '#979797',
+    paddingRight: 15
   },
   hr:{
     backgroundColor: '#EEEEEE',
@@ -25,6 +30,7 @@ const styles = {
 
 const TopicListItem = ({topic}) => {
   const formatDate = (dateStringFormat) => dateStringFormat.substring(0, dateStringFormat.indexOf('T'))
+                                                           .replace(/-/g,'/')
   return(
     <div>
       <div style={styles.container}>
@@ -33,7 +39,7 @@ const TopicListItem = ({topic}) => {
         {topic.messages[0]?
           <div style={styles.latestUpdate}>
             <div style={styles.responses}>{topic.messages.length}</div>
-            <div>Último em</div>
+            <div>último em</div>
             <div>{formatDate(topic.messages[topic.messages.length-1].createdAt)}</div>
           </div>
         :null}
