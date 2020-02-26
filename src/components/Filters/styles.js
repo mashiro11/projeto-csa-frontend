@@ -11,7 +11,6 @@ const styles={
     } : {
       backgroundColor: '#EEEEEE',
       paddingBottom: 10,
-      paddingLeft: 20,
       width: 250,
       flaxGrow: 1
     },

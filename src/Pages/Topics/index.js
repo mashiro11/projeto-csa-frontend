@@ -29,18 +29,23 @@ const Topics = () => {
         <div style={{flexGrow: 2, marginLeft: 30}}>
           { layout === 'DESKTOP' ?
             <div>
-              <div style={styles.header}>
+              <div className='onExtremes'>
                 <h3>LISTA DE CONVERSAS</h3>
-                <div style={{alignSelf: 'center'}}><Link className='button small' to=''>NOVA CONVERSA</Link></div>
+                <div style={{alignSelf: 'center'}}>
+                  <Link className='button small' to='/conversas/nova'>
+                    NOVA CONVERSA
+                  </Link>
+                </div>
               </div>
-              <hr/>
+              <hr style={{marginTop: 0}}/>
             </div>
             :null }
 
-          <div style={styles.header}>
+          <div className='onExtremes' style={{paddingLeft: 20, paddingRight: 20}}>
             <div className='orange'>TEMAS</div>
             <div className='orange'>COMENTÁRIOS</div>
           </div>
+          <hr/>
 
           {topics.length === 0 ?
             <div>Fetching data...</div>

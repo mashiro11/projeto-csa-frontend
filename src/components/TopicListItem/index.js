@@ -4,28 +4,20 @@ import { Link } from 'react-router-dom'
 const styles = {
   container:{
     position:'relative',
-    display:'flex',
     flexDirection: 'horizontal',
     paddingLeft: 20,
-    paddingRight: 20,
-    justifyContent: 'space-between'
+    paddingRight: 20
   },
   responses:{
     color: '#000000'
   },
   latestUpdate:{
-    alignSelf: 'flex-end',
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'center',
     color: '#979797',
     paddingRight: 15
-  },
-  hr:{
-    backgroundColor: '#EEEEEE',
-    color: '#EEEEEE',
-    borderColor: '#FFFFFF'
-  },
+  }
 }
 
 const TopicListItem = ({topic}) => {
@@ -33,7 +25,7 @@ const TopicListItem = ({topic}) => {
                                                            .replace(/-/g,'/')
   return(
     <div>
-      <div style={styles.container}>
+      <div className='onExtremes' style={styles.container}>
         <Link to={`conversas/conversa/${topic.id}`}
           style={styles.link}>{topic.name}</Link>
         {topic.messages[0]?
@@ -44,7 +36,7 @@ const TopicListItem = ({topic}) => {
           </div>
         :null}
       </div>
-      <hr style={styles.hr}/>
+      <hr/>
     </div>
   )
 }
