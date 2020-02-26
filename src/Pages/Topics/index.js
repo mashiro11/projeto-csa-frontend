@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import request from '../../request.js'
 
+import LayoutContext from '../../LayoutContext.js'
+
 import Filters from '../../components/Filters'
 import TopicListItem from '../../components/TopicListItem'
 
@@ -9,7 +11,8 @@ import styles from './styles.js'
 
 
 const Topics = () => {
-  const layout = 'DESKTOP'
+  const layout = React.useContext(LayoutContext)
+
   const [topics, setTopics] = useState([])
   const handleError = (error) => {
     console.log('error:', error)
@@ -26,7 +29,7 @@ const Topics = () => {
       <div style={styles.contentContainer(layout)}>
         <Filters layout={layout}/>
 
-        <div style={{flexGrow: 2, marginLeft: 30}}>
+        <div style={ layout === 'DESKTOP' ? {flexGrow: 2, marginLeft: 30} : null}>
           { layout === 'DESKTOP' ?
             <div>
               <div className='onExtremes'>
@@ -55,7 +58,7 @@ const Topics = () => {
         </div>
 
         { layout === 'MOBILE' ?
-          <Link to='/conversas/nova' className='button.large'>
+          <Link to='/conversas/nova' className='button large'>
             NOVA CONVERSA
           </Link>
           :null }

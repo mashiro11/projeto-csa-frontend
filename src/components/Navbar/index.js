@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
+
+import LayoutContext from '../../LayoutContext.js'
 
 import applicationPages from '../../applicationPages'
 
@@ -10,14 +12,7 @@ import menu from './menu.svg'
 import styles from './styles.js'
 
 const Navbar = () => {
-  
-  let [layout, setLayout] = useState(window.innerWidth >= 660 ? 'DESKTOP' : 'MOBILE')
-  window.addEventListener('resize', e =>{
-    if(document.documentElement.clientWidth >= 660 && layout === 'MOBILE')
-      setLayout('DESKTOP')
-    if(document.documentElement.clientWidth < 660 && layout === 'DESKTOP')
-      setLayout('MOBILE')
-  })
+  const layout = React.useContext(LayoutContext)
 
   return (
     <div>
