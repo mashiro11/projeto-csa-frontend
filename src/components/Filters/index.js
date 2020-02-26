@@ -1,4 +1,5 @@
 import React from 'react'
+import RadioButton from '../RadioButton'
 import styles from './styles.js'
 
 import LayoutContext from '../../LayoutContext.js'
@@ -24,10 +25,18 @@ const Filters = () => {
               </div>
               <h5>Ordenar por:</h5>
                 <div>
-                  <input type='radio' /><label>Últimas comentadas</label><br/>
-                  <input type='radio' /><label>Primeiras comentadas</label><br/>
-                  <input type='radio' /><label>Mais comentadas</label><br/>
-                  <input type='radio' /><label>Menos comentadas</label>
+                  <RadioButton checked={false} onClick={ state => console.log('willSet:', state)}>
+                    Últimas comentadas
+                  </RadioButton>
+                  <RadioButton checked={false}>
+                    Primeiras comentadas
+                  </RadioButton>
+                  <RadioButton checked={false}>
+                    Mais comentadas
+                  </RadioButton>
+                  <RadioButton checked={false}>
+                    Menos comentadas
+                  </RadioButton>
                 </div>
             </div>
 
