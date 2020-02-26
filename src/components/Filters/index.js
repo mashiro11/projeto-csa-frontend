@@ -1,7 +1,10 @@
 import React from 'react'
 import styles from './styles.js'
 
-const Filters = ({layout}) => {
+import LayoutContext from '../../LayoutContext.js'
+
+const Filters = () => {
+  const layout = React.useContext(LayoutContext)
   return(
     <div style={styles.container(layout)}>
       {layout === 'MOBILE' ?

@@ -7,7 +7,7 @@ const styles = {
       display: 'flex',
       flexDirection: 'row',
       padding: 25,
-    }:{},
+    }:null,
   bannerContainer:{
     display: 'flex',
     alignItems: 'center',
@@ -29,10 +29,6 @@ const styles = {
     paddingBottom: 5,
     paddingLeft: 15,
     paddingRight: 15
-  },
-  header:{
-    display: 'flex',
-    justifyContent: 'space-between'
   }
 }
 

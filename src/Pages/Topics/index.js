@@ -27,7 +27,7 @@ const Topics = () => {
       </div>
 
       <div style={styles.contentContainer(layout)}>
-        <Filters layout={layout}/>
+        <Filters/>
 
         <div style={ layout === 'DESKTOP' ? {flexGrow: 2, marginLeft: 30} : null}>
           { layout === 'DESKTOP' ?
