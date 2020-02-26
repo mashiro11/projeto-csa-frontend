@@ -12,7 +12,7 @@ const RadioButton = ({children, initialState, onClick}) => {
             if(onClick)onClick(!checked)
           }}
         >
-        <circle cx="12" cy="12" r="10" stroke-width="2"
+        <circle cx="12" cy="12" r="10" strokeWidth="2"
         stroke={checked ? "#009688":'rgba(0,0,0,0.38)'} />
         {checked ?
           <circle fill="#009688" cx="12" cy="12" r="6" />
