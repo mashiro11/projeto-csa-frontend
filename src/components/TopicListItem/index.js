@@ -34,7 +34,7 @@ const TopicListItem = ({topic}) => {
   return(
     <div>
       <div style={styles.container}>
-        <Link to={`conversas/${topic.id}`}
+        <Link to={`conversas/conversa/${topic.id}`}
           style={styles.link}>{topic.name}</Link>
         {topic.messages[0]?
           <div style={styles.latestUpdate}>
