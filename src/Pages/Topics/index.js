@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import request from '../../request.js'
 
 import LayoutContext from '../../LayoutContext.js'
+import UserContext from '../../UserContext.js'
 
 import Filters from '../../components/Filters'
 import TopicListItem from '../../components/TopicListItem'
@@ -20,6 +21,8 @@ const Topics = () => {
 
   useEffect( () => request('get', 'topics', setTopics, handleError), [])
 
+  const user = React.useContext(UserContext)
+
   return (
     <div>
       <div style={styles.bannerContainer}>
@@ -34,11 +37,13 @@ const Topics = () => {
             <div>
               <div className='onExtremes'>
                 <h3>LISTA DE CONVERSAS</h3>
-                <div style={{alignSelf: 'center'}}>
-                  <Link className='button small' to='/conversas/nova'>
-                    NOVA CONVERSA
-                  </Link>
-                </div>
+                {user.username ?
+                  <div style={{alignSelf: 'center'}}>
+                    <Link className='button small' to='/conversas/nova'>
+                      NOVA CONVERSA
+                    </Link>
+                  </div>
+                : null}
               </div>
               <hr style={{marginTop: 0}}/>
             </div>
@@ -57,7 +62,7 @@ const Topics = () => {
           )}
         </div>
 
-        { layout === 'MOBILE' ?
+        { user.username && layout === 'MOBILE' ?
           <Link to='/conversas/nova' className='button large'>
             NOVA CONVERSA
           </Link>
