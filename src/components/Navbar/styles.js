@@ -53,6 +53,7 @@ const styles = {
     borderRight: '1px solid #686868'
   },
   userIcon:{
+    borderRadius: '50%'
   }
 }
 

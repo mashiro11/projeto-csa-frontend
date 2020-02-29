@@ -3,4 +3,4 @@ const databaseRoute = (route) => {
   return database + route
 }
 
-export { databaseRoute }
+export { database, databaseRoute }

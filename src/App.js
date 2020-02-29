@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom'
 
 import LayoutContext from './LayoutContext.js'
+import UserContext from './UserContext.js'
 
 //Global components
 import Navbar from './components/Navbar'
@@ -17,8 +18,11 @@ import NewTopic from './Pages/NewTopic'
 import WhatIs from './Pages/WhatIs'
 import Login from './Pages/Login'
 
+import request from './request.js'
+
 function App() {
   let [layout, setLayout] = React.useState(window.innerWidth >= 660 ? 'DESKTOP' : 'MOBILE')
+  const [user, setUser] = React.useState({})
 
   window.addEventListener('resize', e =>{
     if(document.documentElement.clientWidth >= 660 && layout === 'MOBILE')
@@ -27,7 +31,24 @@ function App() {
       setLayout('MOBILE')
   })
 
+  //const handleData = (data) => {
+  //  console.log('data:', data)
+  //}
+  //const handleError = (error) => {
+  //  console.log(error)
+  //}
+
+  //CURRENT: not working
+  //Try auto-login
+  //if(document.cookie.length > 0 && !user.username)
+  //  request('get', 'users/me', handleData, handleError, {},
+  //  {
+  //    Authorization: `Bearer  ${document.cookie}`
+  //  })
+  //
+
   return (
+    <UserContext.Provider value={user}>
     <LayoutContext.Provider value={layout}>
       <div className="App">
         <Navbar />
@@ -42,10 +63,13 @@ function App() {
           <Route exact path="/conversas/nova" component={NewTopic} />
 
           <Route exact path="/o-que-e-csa" component={WhatIs} />
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/login"
+            render={(props) => <Login {...props} setUser={setUser} />}
+          />
         </Switch>
       </div>
     </LayoutContext.Provider>
+    </UserContext.Provider>
   )
 }
 

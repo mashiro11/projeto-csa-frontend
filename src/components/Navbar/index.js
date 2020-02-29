@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import LayoutContext from '../../LayoutContext.js'
+import UserContext from '../../UserContext.js'
 
 import applicationPages from '../../applicationPages'
 
@@ -13,6 +14,7 @@ import styles from './styles.js'
 
 const Navbar = () => {
   const layout = React.useContext(LayoutContext)
+  const user = React.useContext(UserContext)
   return (
     <div>
       <div style={styles.container}>
@@ -34,7 +36,7 @@ const Navbar = () => {
               </div>
             : null}
 
-            <Link to='login'><img src={noLoginUser} style={styles.userIcon} alt='user' /></Link>
+            <Link to='login'><img src={user.username ? 'https://i.pravatar.cc/38': noLoginUser} style={styles.userIcon} alt='user' /></Link>
           </div>
 
 

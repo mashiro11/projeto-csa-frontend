@@ -18,7 +18,7 @@ const Topics = () => {
     console.log('error:', error)
   }
 
-  useEffect( () => request('topics', setTopics, handleError), [])
+  useEffect( () => request('get', 'topics', setTopics, handleError), [])
 
   return (
     <div>

@@ -8,7 +8,7 @@ const Csas = () => {
     console.log('Ops:', error)
   }
 
-  useEffect(() => request('csas', setCsas, handleError), [])
+  useEffect(() => request('get', 'csas', setCsas, handleError), [])
 
   return (
     <div>
