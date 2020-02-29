@@ -13,7 +13,6 @@ import styles from './styles.js'
 
 const Navbar = () => {
   const layout = React.useContext(LayoutContext)
-
   return (
     <div>
       <div style={styles.container}>
@@ -35,7 +34,7 @@ const Navbar = () => {
               </div>
             : null}
 
-            <img src={noLoginUser} style={styles.userIcon} alt='user' />
+            <Link to='login'><img src={noLoginUser} style={styles.userIcon} alt='user' /></Link>
           </div>
 
 

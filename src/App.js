@@ -15,6 +15,7 @@ import Topics from './Pages/Topics'
 import Topic from './Pages/Topic'
 import NewTopic from './Pages/NewTopic'
 import WhatIs from './Pages/WhatIs'
+import Login from './Pages/Login'
 
 function App() {
   let [layout, setLayout] = React.useState(window.innerWidth >= 660 ? 'DESKTOP' : 'MOBILE')
@@ -41,6 +42,7 @@ function App() {
           <Route exact path="/conversas/nova" component={NewTopic} />
 
           <Route exact path="/o-que-e-csa" component={WhatIs} />
+          <Route exact path="/login" component={Login} />
         </Switch>
       </div>
     </LayoutContext.Provider>
