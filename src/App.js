@@ -31,21 +31,17 @@ function App() {
       setLayout('MOBILE')
   })
 
-  //const handleData = (data) => {
-  //  console.log('data:', data)
-  //}
-  //const handleError = (error) => {
-  //  console.log(error)
-  //}
+  const handleData = (data) => {
+    setUser(data)
+  }
+  const handleError = (error) => {
+    console.log(error)
+  }
 
   //CURRENT: not working
   //Try auto-login
-  //if(document.cookie.length > 0 && !user.username)
-  //  request('get', 'users/me', handleData, handleError, {},
-  //  {
-  //    Authorization: `Bearer  ${document.cookie}`
-  //  })
-  //
+  if(document.cookie.length > 0 && !user.username)
+    request('get', 'users/me', handleData, handleError, {}, true)
 
   return (
     <UserContext.Provider value={user}>

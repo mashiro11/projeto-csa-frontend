@@ -2,7 +2,6 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 import request from '../../request.js'
-import { databaseRoute } from '../../database.js'
 
 const NewTopic = () => {
   const [newTopic, setNewTopic] = React.useState({notSent: true})
