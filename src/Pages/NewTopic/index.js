@@ -8,17 +8,14 @@ const NewTopic = () => {
   const [topicName, setTopicName] = React.useState('')
 
   const handleData = (data) => {
-    console.log('data:', data)
+    setNewTopic(data)
   }
 
   const handleError = (error) => {
     console.log('error:', error)
   }
 
-  console.log('cookie:', document.cookie)
-
   const submit = () => {
-    console.log('submitting')
     request('post', 'topics', handleData, handleError,
     {
       name: topicName
@@ -28,6 +25,8 @@ const NewTopic = () => {
 
   return(
     <div>
+    {newTopic.id ? <Redirect to={`/conversas/conversa/${newTopic.id}`} />
+      : <div>
           <div>
             <div>Conversas</div>
             <div>Publicar nova</div>
@@ -48,8 +47,9 @@ const NewTopic = () => {
               </button>
             </div>
           </div>
-    </div>
-  )
+        </div>
+    }
+  </div>)
 }
 
 export default NewTopic
