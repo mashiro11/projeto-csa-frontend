@@ -18,6 +18,8 @@ import NewTopic from './Pages/NewTopic'
 import WhatIs from './Pages/WhatIs'
 import Login from './Pages/Login'
 
+import PrivateRoute from './components/PrivateRoute'
+
 import request from './request.js'
 
 function App() {
@@ -56,7 +58,7 @@ function App() {
 
           <Route exact path="/conversas" component={Topics} />
           <Route path="/conversas/conversa/:id" component={Topic} />
-          <Route exact path="/conversas/nova" component={NewTopic} />
+          <PrivateRoute exact path="/conversas/nova" component={NewTopic} />
 
           <Route exact path="/o-que-e-csa" component={WhatIs} />
           <Route exact path="/login"
