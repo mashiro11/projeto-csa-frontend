@@ -7,19 +7,15 @@ import Message from '../../components/Message'
 
 const styles={
   header:{
-    paddingRight: 20,
-    paddingLeft: 20
-  },
-  title:{
-
+    padding: 20,
+    boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)'
   },
   subinfo:{
     color: '#979797'
   },
   messagesList:{
     paddingTop: 10,
-    paddingBottom: 20,
-    backgroundColor: '#EEEEEE'
+    paddingBottom: 20
   },
   routinesBox:{
     marginBottom: 20

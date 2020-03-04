@@ -21,7 +21,9 @@ const MessageOwner = ({messageOwner}) => {
       </div>
 
       <div>
-        <div><span>{messageOwner.username}</span><span>|icon|</span></div>
+        <h5 style={{marginBottom: 0}}><span>{messageOwner.username}</span>
+          <span>|icon|</span>
+        </h5>
         <div><Link to=''>CSA do usuário</Link></div>
       </div>
     </div>
