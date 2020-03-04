@@ -37,7 +37,7 @@ const Navbar = () => {
             : null}
 
             <Link to='/login'>
-              <img src={user.username ? 'https://i.pravatar.cc/38': noLoginUser} style={styles.userIcon} alt='user' />
+              <img className='avatar' src={user.username ? 'https://i.pravatar.cc/38': noLoginUser} style={styles.userIcon} alt='user' />
             </Link>
           </div>
 

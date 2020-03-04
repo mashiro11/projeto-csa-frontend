@@ -51,9 +51,6 @@ const styles = {
     marginRight: 10,
     paddingRight: 10,
     borderRight: '1px solid #686868'
-  },
-  userIcon:{
-    borderRadius: '50%'
   }
 }
 

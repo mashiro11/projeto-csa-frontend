@@ -53,6 +53,7 @@ h5 {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  cursor: pointer;
 
   height: 30;
 
@@ -78,4 +79,8 @@ h5 {
 .onExtremes{
   display: flex;
   justify-content: space-between
+}
+
+.avatar{
+  border-radius: 50%
 }

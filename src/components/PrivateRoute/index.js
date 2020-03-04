@@ -4,7 +4,6 @@ import UserContext from '../../UserContext'
 
 const PrivateRoute = ({component: Component, ...upperProps}) => {
   const user = React.useContext(UserContext)
-  console.log('user:', user)
 
   return(
     <Route {...upperProps}

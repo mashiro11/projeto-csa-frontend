@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import { formatDate } from '../../utils.js'
+
 const styles = {
   container:{
     position:'relative',
@@ -21,8 +23,7 @@ const styles = {
 }
 
 const TopicListItem = ({topic}) => {
-  const formatDate = (dateStringFormat) => dateStringFormat.substring(0, dateStringFormat.indexOf('T'))
-                                                           .replace(/-/g,'/')
+
   return(
     <div>
       <div className='onExtremes' style={styles.container}>

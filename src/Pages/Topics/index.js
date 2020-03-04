@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import request from '../../request.js'
 
@@ -13,15 +13,16 @@ import styles from './styles.js'
 
 const Topics = () => {
   const layout = React.useContext(LayoutContext)
+  const user = React.useContext(UserContext)
 
-  const [topics, setTopics] = useState([])
+  const [topics, setTopics] = React.useState([])
   const handleError = (error) => {
     console.log('error:', error)
   }
 
-  useEffect( () => request('get', 'topics', setTopics, handleError), [])
+  React.useEffect( () => request('get', 'topics', setTopics, handleError), [])
 
-  const user = React.useContext(UserContext)
+
 
   return (
     <div>
