@@ -35,25 +35,17 @@ const Topic = (props) => {
   const [reply, setReply] = React.useState(false)
   const [newMessage, setNewMessage] = React.useState({})
 
-  const loadPage = () => {
+  const loadPage = (data) => {
     setReply(false)
     request('get',`topics/${props.match.params.id}`, setTopic, handleError)
   }
-
-  const handleData = (ctx) => (data) => {
-    request('put', `${ctx.name}/${ctx.id}`,
-            (d) => loadPage() ,
-            handleError,
-      {messages: [...ctx.messages, data.id]}, true)
-  }
-
+  
   const handleError = (error) => {
     console.log('error:', error)
   }
 
-  const addMessage = (ctx, text) => {
-    console.log('constructing addMessage with ctx:', ctx)
-    request('post', 'messages',  handleData(ctx), handleError, {user: user.id, text: text}, true)
+  const addMessage = (model, text) => {
+    request('post', 'messages',  loadPage, handleError, {...model, user: user.id, text: text}, true)
   }
 
   React.useEffect( loadPage, [])
@@ -78,17 +70,17 @@ const Topic = (props) => {
             <div style={styles.messagesList}>
               {topic.messages.map( (item, index) =>
                 <React.Fragment key={index}>
-                  { index > 1 ? <hr/> : null }
+                  { index > 0 ? <hr/> : null }
                   <Message message={item} />
                   <MessageReplyer onSend={ (text) => () => {
-                    addMessage({name: 'messages', id: item.id, messages: item.messages.filter( m => m.id)}, text)
+                    addMessage({message: item.id}, text)
                   }}/>
                 </React.Fragment>
               )}
             </div>
             : <MessageSender onCancel={ () => setReply(false) }
                 onSend={ (text) => () => {
-                  addMessage({name: 'topics', id: topic.id, messages: topic.messages.filter( m => m.id)}, text)
+                  addMessage({topic: topic.id}, text)
                 }}/>
           }
           <div className='button large centeredH' onClick={() => setReply(true) } >NOVA MENSAGEM</div>

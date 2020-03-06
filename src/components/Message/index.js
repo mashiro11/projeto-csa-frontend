@@ -26,11 +26,15 @@ const styles={
 }
 
 const Message = ({message}) => {
+  console.log('message:', message)
   return(
     <div style={styles.container}>
       <MessageOwner messageOwner={message.user} />
       <div style={styles.time}>{formatDate(message.createdAt, true)}</div>
       <div style={styles.text}>{message.text}</div>
+      {message.messages?.map( (item, index) =>
+        <Message message={item} key={index} />
+      )}
     </div>
   )
 }
