@@ -36,6 +36,10 @@ const Topic = (props) => {
   useEffect( () => request('get',`topics/${props.match.params.id}`, setTopic, handleError),
             [props.match.params.id])
 
+  const addMessage = () => {
+    request('put', 'messages', )
+  }
+
   return(
     <div>
       {topic.id ?
@@ -49,17 +53,17 @@ const Topic = (props) => {
             )}
           </div>
         </div>
-        <div>
-          <div style={styles.messagesList}>
-            {topic.messages.map( (item, index) =>
-              <React.Fragment key={index}>
-                { index > 1 ? <hr/> : null }
-                <Message message={item} />
-              </React.Fragment>
-            )}
-          </div>
-          <div className='button large' >NOVA MENSAGEM</div>
+
+        <div style={styles.messagesList}>
+          {topic.messages.map( (item, index) =>
+            <React.Fragment key={index}>
+              { index > 1 ? <hr/> : null }
+              <Message message={item} />
+            </React.Fragment>
+          )}
         </div>
+
+        <div className='button large centeredH'>NOVA MENSAGEM</div>
       </div>
     : <div>Fetching data...</div>}
     </div>

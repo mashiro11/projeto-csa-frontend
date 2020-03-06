@@ -64,7 +64,7 @@ const Topics = () => {
         </div>
 
         { user.username && layout === 'MOBILE' ?
-          <Link to='/conversas/nova' className='button large'>
+          <Link to='/conversas/nova' className='button large centeredH'>
             NOVA CONVERSA
           </Link>
           :null }

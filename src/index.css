@@ -58,8 +58,6 @@ h5 {
 
 .button {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
   cursor: pointer;
 
   height: 30;
@@ -73,6 +71,11 @@ h5 {
 
   color: white;
   font-weight: 500
+}
+
+.centeredH {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .button.large{
