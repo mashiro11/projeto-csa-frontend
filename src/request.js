@@ -7,6 +7,7 @@ const cookieToObj = (cookieString) => {
   return fields.reduce( (obj, field) => {return { ...obj, [field[0].trim(' ')]: field[1] }}, {} )
 }
 const request = (method, path, handleData, handleError, payload, useHeaders) => {
+  console.log('payload:', payload)
   axios({
     method: method,
     url: databaseRoute(path),

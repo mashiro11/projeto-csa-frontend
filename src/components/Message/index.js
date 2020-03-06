@@ -1,8 +1,8 @@
 import React from 'react'
-import UserContext from '../../UserContext'
 import MessageOwner from '../MessageOwner'
-import MessageSender from '../MessageSender'
 import { formatDate } from '../../utils.js'
+
+import request from '../../request.js'
 
 const styles={
   container:{
@@ -26,21 +26,11 @@ const styles={
 }
 
 const Message = ({message}) => {
-  const user = React.useContext(UserContext)
-  const [reply, setReply] = React.useState(false)
-
-  const onCancel = () => setReply(false)
-  const onSend = () => {console.log('Send')}
-
   return(
     <div style={styles.container}>
       <MessageOwner messageOwner={message.user} />
       <div style={styles.time}>{formatDate(message.createdAt, true)}</div>
       <div style={styles.text}>{message.text}</div>
-      {user.id && !reply ?
-        <div style={styles.reply} onClick={() => setReply(true)}>RESPONDER</div>
-        : <MessageSender onCancel={onCancel} onSend={onSend} />
-      }
     </div>
   )
 }

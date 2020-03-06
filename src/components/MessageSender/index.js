@@ -34,7 +34,7 @@ const MessageSender = ({onCancel, onSend, onAttach}) => {
       </div>
       <div style={styles.buttonsContainer}>
         <div className='button small' style={styles.button} onClick={onCancel}>CANCELAR</div>
-        <div className='button small' style={styles.button} onClick={onSend}>ENVIAR</div>
+        <div className='button small' style={styles.button} onClick={onSend(text)}>ENVIAR</div>
       </div>
     </div>
   )
