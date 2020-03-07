@@ -14,7 +14,6 @@ const NewTopic = () => {
   }
 
   const handleData = (data) => {
-
     setNewTopic(data)
   }
 

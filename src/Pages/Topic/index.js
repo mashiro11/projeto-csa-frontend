@@ -33,13 +33,12 @@ const Topic = (props) => {
   const user = React.useContext(UserContext)
   const [topic, setTopic] = React.useState({})
   const [reply, setReply] = React.useState(false)
-  const [newMessage, setNewMessage] = React.useState({})
 
   const loadPage = (data) => {
     setReply(false)
     request('get',`topics/${props.match.params.id}`, setTopic, handleError)
   }
-  
+
   const handleError = (error) => {
     console.log('error:', error)
   }
@@ -53,9 +52,7 @@ const Topic = (props) => {
   return(
     <div>
       {topic.id ?
-
-        <div>
-
+        <>
           <div style={styles.header}>
             <h2 style={styles.title}>{topic.name}</h2>
             <div style={styles.routinesBox}>
@@ -71,20 +68,25 @@ const Topic = (props) => {
               {topic.messages.map( (item, index) =>
                 <React.Fragment key={index}>
                   { index > 0 ? <hr/> : null }
-                  <Message message={item} />
-                  <MessageReplyer onSend={ (text) => () => {
-                    addMessage({message: item.id}, text)
-                  }}/>
+                  <Message message={item} isOwner={user.id === item.user.id} />
+                  {user.id ?
+                    <MessageReplyer onSend={ (text) => () => {
+                      addMessage({message: item.id}, text)
+                    }}/>
+                    :null
+                  }
                 </React.Fragment>
               )}
             </div>
             : <MessageSender onCancel={ () => setReply(false) }
-                onSend={ (text) => () => {
-                  addMessage({topic: topic.id}, text)
-                }}/>
+                onSend={ (text) => () => addMessage({topic: topic.id}, text)}
+              />
           }
-          <div className='button large centeredH' onClick={() => setReply(true) } >NOVA MENSAGEM</div>
-        </div>
+          {user.id ?
+            <div className='button large centeredH' onClick={() => setReply(true) }>NOVA MENSAGEM</div>
+            : null
+          }
+        </>
         : <div>Fetching data...</div>}
     </div>
   )

@@ -2,7 +2,8 @@ import React from 'react'
 import MessageOwner from '../MessageOwner'
 import { formatDate } from '../../utils.js'
 
-import request from '../../request.js'
+import DeleteIcon from '../../icons/Delete'
+import EditIcon from '../../icons/Edit'
 
 const styles={
   container:{
@@ -25,11 +26,18 @@ const styles={
   }
 }
 
-const Message = ({message}) => {
-  console.log('message:', message)
+const Message = ({message, isOwner}) => {
   return(
     <div style={styles.container}>
-      <MessageOwner messageOwner={message.user} />
+      <div className='onExtremes'>
+        <MessageOwner messageOwner={message.user} />
+        {isOwner?
+          <div>
+            <EditIcon /><DeleteIcon />
+          </div>
+          :null
+        }
+      </div>
       <div style={styles.time}>{formatDate(message.createdAt, true)}</div>
       <div style={styles.text}>{message.text}</div>
       {message.messages?.map( (item, index) =>
