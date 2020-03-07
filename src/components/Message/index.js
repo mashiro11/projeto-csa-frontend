@@ -1,6 +1,7 @@
 import React from 'react'
 import UserContext from '../../UserContext'
 import MessageOwner from '../MessageOwner'
+import MessageSender from '../MessageSender'
 import { formatDate } from '../../utils.js'
 
 import DeleteIcon from '../../icons/Delete'
@@ -27,24 +28,31 @@ const styles={
   }
 }
 
-const Message = ({message, onDelete}) => {
+const Message = ({message, onEdit, onDelete}) => {
   const user = React.useContext(UserContext)
+  const [editMode, setEditMode] = React.useState(false)
+
   return(
     <div style={styles.container}>
       <div className='onExtremes'>
         <MessageOwner messageOwner={message.user} />
-        {user.id === message.user.id?
+        {(user.id === message.user.id) && !editMode ?
           <div>
-            <EditIcon onClick={()=>{}}/>
+            <EditIcon onClick={ () => setEditMode(true) }/>
             <DeleteIcon onClick={onDelete(message.id)}/>
           </div>
           :null
         }
       </div>
       <div style={styles.time}>{formatDate(message.createdAt, true)}</div>
-      <div style={styles.text}>{message.text}</div>
+
+      {!editMode ?
+        <div style={styles.text}>{message.text}</div>
+        :<MessageSender initialValue={message.text} onCancel={() => setEditMode(false)} onSend={onEdit(message.id)}/>
+      }
+
       {message.messages?.map( (item, index) =>
-        <Message message={item} key={index} onDelete={onDelete}/>
+        <Message message={item} key={index} onEdit={onEdit} onDelete={onDelete}/>
       )}
     </div>
   )

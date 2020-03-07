@@ -52,6 +52,9 @@ const Topic = (props) => {
     request('delete', `messages/${id}`, loadPage, handleError, null, true)
   }
 
+  const editMessage = (id) => (text) => () => {
+    request('put', `messages/${id}`, loadPage, handleError, {text: text}, true)
+  }
   React.useEffect( loadPage, [])
 
   return(
@@ -73,7 +76,7 @@ const Topic = (props) => {
               {topic.messages.map( (item, index) =>
                 <React.Fragment key={index}>
                   { index > 0 ? <hr/> : null }
-                  <Message message={item} onDelete={ deleteMessage } />
+                  <Message message={item} onEdit={ editMessage } onDelete={ deleteMessage } />
                   {user.id ?
                     <MessageReplyer
                       onSend={ (text) => () => {

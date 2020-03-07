@@ -24,8 +24,8 @@ const styles = {
   }
 }
 
-const MessageSender = ({onCancel, onSend, onAttach}) => {
-  const [text, setText] = React.useState('')
+const MessageSender = ({initialValue, onCancel, onSend, onAttach}) => {
+  const [text, setText] = React.useState(initialValue? initialValue : '')
   return(
     <div>
       <div style={styles.textContainer}>
