@@ -92,7 +92,7 @@ const Topic = (props) => {
                 onSend={ (text) => () => addMessage({topic: topic.id}, text)}
               />
           }
-          {user.id ?
+          {user.id && !reply ?
             <div className='button large centeredH' onClick={() => setReply(true) }>NOVA MENSAGEM</div>
             : null
           }

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import AttachIcon from '../../icons/Attach'
+
 const styles = {
   textContainer:{
     display:'flex',
@@ -30,7 +32,7 @@ const MessageSender = ({initialValue, onCancel, onSend, onAttach}) => {
     <div>
       <div style={styles.textContainer}>
         <textarea style={styles.textInput} value={text} onChange={ e => setText(e.target.value)} />
-        <div onClick={onAttach}>att</div>
+        <AttachIcon onClick={onAttach} />
       </div>
       <div style={styles.buttonsContainer}>
         <div className='button small' style={styles.button} onClick={onCancel}>CANCELAR</div>
