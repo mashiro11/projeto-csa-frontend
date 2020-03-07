@@ -36,6 +36,7 @@ const Topic = (props) => {
 
   const loadPage = (data) => {
     setReply(false)
+    setTopic({})
     request('get',`topics/${props.match.params.id}`, setTopic, handleError)
   }
 
@@ -45,6 +46,10 @@ const Topic = (props) => {
 
   const addMessage = (model, text) => {
     request('post', 'messages',  loadPage, handleError, {...model, user: user.id, text: text}, true)
+  }
+
+  const deleteMessage = (id) => () => {
+    request('delete', `messages/${id}`, loadPage, handleError, null, true)
   }
 
   React.useEffect( loadPage, [])
@@ -68,11 +73,13 @@ const Topic = (props) => {
               {topic.messages.map( (item, index) =>
                 <React.Fragment key={index}>
                   { index > 0 ? <hr/> : null }
-                  <Message message={item} isOwner={user.id === item.user.id} />
+                  <Message message={item} onDelete={ deleteMessage } />
                   {user.id ?
-                    <MessageReplyer onSend={ (text) => () => {
-                      addMessage({message: item.id}, text)
-                    }}/>
+                    <MessageReplyer
+                      onSend={ (text) => () => {
+                        addMessage({message: item.id}, text)
+                      }}
+                    />
                     :null
                   }
                 </React.Fragment>

@@ -1,4 +1,5 @@
 import React from 'react'
+import UserContext from '../../UserContext'
 import MessageOwner from '../MessageOwner'
 import { formatDate } from '../../utils.js'
 
@@ -26,14 +27,16 @@ const styles={
   }
 }
 
-const Message = ({message, isOwner}) => {
+const Message = ({message, onDelete}) => {
+  const user = React.useContext(UserContext)
   return(
     <div style={styles.container}>
       <div className='onExtremes'>
         <MessageOwner messageOwner={message.user} />
-        {isOwner?
+        {user.id === message.user.id?
           <div>
-            <EditIcon /><DeleteIcon />
+            <EditIcon onClick={()=>{}}/>
+            <DeleteIcon onClick={onDelete(message.id)}/>
           </div>
           :null
         }
@@ -41,7 +44,7 @@ const Message = ({message, isOwner}) => {
       <div style={styles.time}>{formatDate(message.createdAt, true)}</div>
       <div style={styles.text}>{message.text}</div>
       {message.messages?.map( (item, index) =>
-        <Message message={item} key={index} />
+        <Message message={item} key={index} onDelete={onDelete}/>
       )}
     </div>
   )
