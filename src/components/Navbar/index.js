@@ -6,9 +6,9 @@ import UserContext from '../../UserContext.js'
 
 import applicationPages from '../../applicationPages'
 
-import noLoginUser from './noLoginUser.svg'
+import UserIcon from '../../icons/User'
 import Logo from './Logo.svg'
-import menu from './menu.svg'
+import MenuIcon from '../../icons/Menu'
 
 import styles from './styles.js'
 
@@ -19,7 +19,7 @@ const Navbar = () => {
     <div>
       <div style={styles.container}>
         {layout === 'MOBILE' ?
-          <img src={menu} style={styles.menuIcon} alt='menu'/> : null
+          <MenuIcon style={styles.menuIcon}/> : null
         }
 
           <Link style={layout === 'DESKTOP'? styles.logoD : styles.logoM} to='/'>
@@ -37,7 +37,9 @@ const Navbar = () => {
             : null}
 
             <Link to='/login'>
-              <img className='avatar' src={user.username ? 'https://i.pravatar.cc/38': noLoginUser} style={styles.userIcon} alt='user' />
+              {user.username ?
+                <img src='https://i.pravatar.cc/38' alt='user' className='avatar' />
+                : <UserIcon />}
             </Link>
           </div>
 
