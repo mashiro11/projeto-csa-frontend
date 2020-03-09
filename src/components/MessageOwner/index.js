@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import AgricultorIcon from '../../icons/Agricultor'
 
 const styles={
   container:{
@@ -22,7 +23,7 @@ const MessageOwner = ({messageOwner}) => {
 
       <div>
         <h5 style={{marginBottom: 0}}><span>{messageOwner.username}</span>
-          <span>|icon|</span>
+          <AgricultorIcon />
         </h5>
         <div><Link to=''>CSA do usuário</Link></div>
       </div>

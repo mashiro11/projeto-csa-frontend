@@ -1,12 +1,25 @@
 import React from 'react'
 import MessageSender from '../MessageSender'
 
+const styles={
+  container:{
+    display: 'block',
+    position: 'relative',
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  replyButton:{
+    position: 'absolute',
+    right: 20
+  }
+}
+
 const MessageReplyer = ({onSend}) => {
   const [reply, setReply] = React.useState(false)
   return (
-    <div>
+    <div style={styles.container}>
       { !reply ?
-        <div onClick={() => setReply(true)}> Responder</div>
+        <a style={styles.replyButton} onClick={() => setReply(true)}> RESPONDER</a>
         : <MessageSender onCancel={() => setReply(false)} onSend={onSend}/>
         }
     </div>

@@ -65,8 +65,8 @@ const Topic = (props) => {
             <h2 style={styles.title}>{topic.name}</h2>
             <div style={styles.routinesBox}>
               <div style={styles.subinfo}>Práticas relacionadas a esse tema</div>
-              { ["Rotina 1", "Rotina2", "Rotina 3"].map( (item, index) =>
-                <Link style={styles.routines} to='' key={index}>{item}</Link>
+              { topic.routines.map( (item, index) =>
+                <Link style={styles.routines} to={`/rotinas/rotina/${item.id}`} key={index}>{item.name}</Link>
               )}
             </div>
           </div>
