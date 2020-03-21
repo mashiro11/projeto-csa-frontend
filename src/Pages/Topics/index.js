@@ -14,13 +14,18 @@ import styles from './styles.js'
 const Topics = () => {
   const layout = React.useContext(LayoutContext)
   const user = React.useContext(UserContext)
-
   const [topics, setTopics] = React.useState([])
+  const [routines, setRoutines] = React.useState([])
   const handleError = (error) => {
     console.log('error:', error)
   }
 
-  React.useEffect( () => request('get', 'topics', setTopics, handleError), [])
+  const loadPage = () => {
+    request('get', 'topics', setTopics, handleError)
+    request('get', `routines`, setRoutines, handleError)
+  }
+
+  React.useEffect( loadPage, [])
 
 
 
