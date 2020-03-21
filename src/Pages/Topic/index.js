@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import UserContext from '../../UserContext'
+import LayoutContext from '../../LayoutContext'
+
 import request from '../../request.js'
 
 import Message from '../../components/Message'
@@ -9,6 +11,12 @@ import MessageReplyer from '../../components/MessageReplyer'
 import MessageSender from '../../components/MessageSender'
 
 const styles={
+  container:{
+  },
+  dContainer:{
+    width: '60%',
+    margin: '0 auto'
+  },
   header:{
     padding: 20,
     boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)'
@@ -30,6 +38,7 @@ const styles={
   }
 }
 const Topic = (props) => {
+  const layout = React.useContext(LayoutContext)
   const user = React.useContext(UserContext)
   const [topic, setTopic] = React.useState({})
   const [reply, setReply] = React.useState(false)
@@ -58,9 +67,9 @@ const Topic = (props) => {
   React.useEffect( loadPage, [])
 
   return(
-    <div>
+    <div style={styles.container}>
       {topic.id ?
-        <>
+        <div style={layout === 'DESKTOP' ? styles.dContainer : null}>
           <div style={styles.header}>
             <h2 style={styles.title}>{topic.name}</h2>
             <div style={styles.routinesBox}>
@@ -96,7 +105,7 @@ const Topic = (props) => {
             <div className='button large centeredH' onClick={() => setReply(true) }>NOVA MENSAGEM</div>
             : null
           }
-        </>
+        </div>
         : <div>Fetching data...</div>}
     </div>
   )

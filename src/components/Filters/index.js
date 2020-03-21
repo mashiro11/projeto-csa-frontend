@@ -3,9 +3,13 @@ import RadioButton from '../RadioButton'
 import styles from './styles.js'
 
 import LayoutContext from '../../LayoutContext.js'
+import Drawer from '../Drawer'
+import Searchbox from '../Searchbox'
 
 const Filters = () => {
   const layout = React.useContext(LayoutContext)
+  const [searchValue, setSearchValue] = React.useState('')
+
   return(
     <div style={styles.container(layout)}>
       {layout === 'MOBILE' ?
@@ -43,7 +47,11 @@ const Filters = () => {
             <div>
               <div className='orange'>TEMA DA CONVERSA</div>
               <h5>Praticas relacionadas ao tema</h5>
-              <div>Selecione uma ou mais práticas</div>
+              <Drawer initialState={'closed'}
+                openLabel='Selecione uma ou mais práticas'
+                closeLabel='Fechar lista de práticas'>
+                <Searchbox value={searchValue} setValue={setSearchValue}/>
+              </Drawer>
               <div>LIMPAR FILTROS</div>
             </div>
           </div>
