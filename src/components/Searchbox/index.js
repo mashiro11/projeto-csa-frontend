@@ -8,26 +8,30 @@ const styles={
     backgroundColor: 'white',
     marginLeft: -10,
     marginRight: 10,
+    padding: 5
   },
   input:{
     border: 'none',
+    height: 20,
+    fontSize: 12,
+    width: 197,
     ':focus':{
       outline: 'none'
     },
     outline: 'none',
-    paddingBottom: 5
   },
   icon:{
-    margin: 5,
-    marginBottom: 0
+    marginRight: 3
   }
 }
 
-const Searchbox = ({value, setValue}) => {
+const Searchbox = ({value, setValue, placeholder}) => {
   return(
     <div style={styles.container}>
       <SearchIcon style={styles.icon}/>
-      <input style={styles.input} type='text' value={value} onChange={ e => setValue(e.target.value)}/>
+      <input style={styles.input} type='text' value={value}
+        placeholder={placeholder}
+        onChange={ e => setValue(e.target.value)}/>
     </div>
   )
 }
