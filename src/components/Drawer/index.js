@@ -18,13 +18,13 @@ const Drawer = ({children, openLabel, closeLabel, initialState}) => {
             {children}
           </div>
           <div style={styles.label} onClick={ () => setOpen(!open)}>
-            {closeLabel}<DownArrowIcon rotate={'180'}/>
+            {closeLabel}<DownArrowIcon rotate='180'/>
           </div>
         </div>
         :
         <div>
           <div style={styles.label} onClick={ () => setOpen(!open)}>
-            {openLabel}<DownArrowIcon />
+            {openLabel}<DownArrowIcon rotate='0'/>
           </div>
         </div>
       }
