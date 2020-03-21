@@ -11,7 +11,8 @@ const styles = {
     backgroundColor: '#EEEEEE',
     fontSize: 14,
     fontFamily: 'Roboto',
-    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    zIndex: 10
   },
   menuIcon:{
     position: 'absolute',
