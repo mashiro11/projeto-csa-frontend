@@ -16,18 +16,22 @@ const Topics = () => {
   const user = React.useContext(UserContext)
   const [topics, setTopics] = React.useState([])
   const [routines, setRoutines] = React.useState([])
+  const [filters, setFilters] = React.useState([])
+
   const handleError = (error) => {
     console.log('error:', error)
   }
 
   const loadPage = () => {
     request('get', 'topics', setTopics, handleError)
-    request('get', `routines`, setRoutines, handleError)
+    request('get', `routine-categories`, setRoutines, handleError)
+  }
+
+  const filterOption = (filter) => (set) => () => {
+    set ? setFilters([...filters, filter]) : setFilters(filters.filter( item => item !== filter))
   }
 
   React.useEffect( loadPage, [])
-
-
 
   return (
     <div>
@@ -36,7 +40,7 @@ const Topics = () => {
       </div>
 
       <div style={styles.contentContainer(layout)}>
-        <Filters/>
+        <Filters filterOptions={routines} onSelect={filterOption} />
 
         <div style={ layout === 'DESKTOP' ? {flexGrow: 2, marginLeft: 30} : null}>
           { layout === 'DESKTOP' ?
@@ -63,7 +67,10 @@ const Topics = () => {
 
           {topics.length === 0 ?
             <div>Fetching data...</div>
-          : topics.map((item, index) =>
+          : topics
+            .filter( topic =>
+              topic.routines?.some( routine => filters.length > 0 ? filters.includes(routine.name) : true )
+            ).map((item, index) =>
             <TopicListItem topic={item} key={index}/>
           )}
         </div>

@@ -7,7 +7,7 @@ import Drawer from '../Drawer'
 import Searchbox from '../Searchbox'
 import Checkbox from '../Checkbox'
 
-const Filters = () => {
+const Filters = ({filterOptions, onSelect}) => {
   const layout = React.useContext(LayoutContext)
   const [searchValue, setSearchValue] = React.useState('')
 
@@ -53,54 +53,16 @@ const Filters = () => {
                 openLabel='Selecione uma ou mais práticas'
                 closeLabel='Fechar lista de práticas'>
                 <Searchbox value={searchValue} setValue={setSearchValue} placeholder='Busque práticas ou selecione abaixo'/>
-                <Drawer labelType='button' label='Produção' initialState='open'>
-                  <div>
-                    <div><Checkbox />Definição do que será plantado</div>
-                    <div><Checkbox />Manejo da produção</div>
-                    <div><Checkbox />Planejamento do plantio</div>
-                    <div><Checkbox />Definição do método do plantio</div>
-                    <div><Checkbox />Aquisição de insumos</div>
-                    <div><Checkbox />Colheita</div>
-                    <div><Checkbox />Troca de excedentes de produtos e insumos</div>
-                  </div>
-                </Drawer>
-                <Drawer labelType='button' label='Distribuição' initialState='close'>
-                  <div>
-                    <div><Checkbox />Montagem das cestas</div>
-                    <div><Checkbox />Listagem dos itens que compõem a cesta</div>
-                    <div><Checkbox />Vendas espontâneas de produtos</div>
-                    <div><Checkbox />Retirada dos produtos complementares</div>
-                    <div><Checkbox />Partilha a doação de excedentes</div>
-                  </div>
-                </Drawer>
-                <Drawer labelType='button' label='Convivência' initialState='close'>
-                  <div>
-                    <div><Checkbox />Divulgação externa</div>
-                    <div><Checkbox />Divulgação interna</div>
-                    <div><Checkbox />Acolhimento de novos coagricultores</div>
-                    <div><Checkbox />Atividades de convivência</div>
-                    <div><Checkbox />Avaliações da CSA</div>
-                    <div><Checkbox />Reuniões de gestão</div>
-                    <div><Checkbox />Definição de funções e responsabilidades</div>
-                    <div><Checkbox />Troca de informações sobre saúde e alimentação</div>
-                    <div><Checkbox />Comunicação com a Rede CSA Brasília</div>
-                    <div><Checkbox />Inclusão de produtos complementares</div>
-                  </div>
-                </Drawer>
-                <Drawer labelType='button' label='Financeiro' initialState='close'>
-                  <div>
-                    <div><Checkbox />Pagamento de comentas</div>
-                    <div><Checkbox />Repasse para terceiros</div>
-                    <div><Checkbox />Pagamento de produtos complementares</div>
-                    <div><Checkbox />Gestão do fundo de reserva</div>
-                    <div><Checkbox />Levantamento dos custos de produção e distribuição</div>
-                    <div><Checkbox />Definição do fundo de reserva e repasses para terceiros</div>
-                    <div><Checkbox />Definição de quantidade, tipos e valores de cotas</div>
-                    <div><Checkbox />Controle de entradas e saídas de coagricultores</div>
-                    <div><Checkbox />Adesão de coagricultores/ formalização do compromisso</div>
-                    <div><Checkbox />Pagamento de funcionários</div>
-                  </div>
-                </Drawer>
+                {filterOptions?.map( (routineCategory, index) =>
+                  <Drawer key={index} labelType='button' label={routineCategory.name} initialState='open'>
+                  {routineCategory.routines?.map((routine, index)=>
+                    <div key={index}>
+                      <Checkbox onCheck={onSelect(routine.name)}/>
+                      {routine.name}
+                    </div>
+                  )}
+                  </Drawer>
+                )}
                 <Drawer labelType='button' label='Outros' initialState='close'>
                   <div><Checkbox/>Outras práticas</div>
                 </Drawer>
