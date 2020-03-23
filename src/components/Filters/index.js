@@ -55,7 +55,9 @@ const Filters = ({filterOptions, onSelect}) => {
                 <Searchbox value={searchValue} setValue={setSearchValue} placeholder='Busque práticas ou selecione abaixo'/>
                 {filterOptions?.map( (routineCategory, index) =>
                   <Drawer key={index} labelType='button' label={routineCategory.name} initialState='open'>
-                  {routineCategory.routines?.map((routine, index)=>
+                  {routineCategory.routines
+                    ?.filter( routine => routine.name.toLowerCase().includes(searchValue.toLowerCase()))
+                    .map((routine, index)=>
                     <div key={index}>
                       <Checkbox onCheck={onSelect(routine.name)}/>
                       {routine.name}

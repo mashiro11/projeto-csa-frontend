@@ -40,7 +40,7 @@ const Topics = () => {
       </div>
 
       <div style={styles.contentContainer(layout)}>
-        <Filters filterOptions={routines} onSelect={filterOption} />
+        <Filters filterOptions={routines} onSelect={filterOption}/>
 
         <div style={ layout === 'DESKTOP' ? {flexGrow: 2, marginLeft: 30} : null}>
           { layout === 'DESKTOP' ?
@@ -70,7 +70,7 @@ const Topics = () => {
           : topics
             .filter( topic =>
               topic.routines?.some( routine => filters.length > 0 ? filters.includes(routine.name) : true )
-            ).map((item, index) =>
+            ).map( (item, index) =>
             <TopicListItem topic={item} key={index}/>
           )}
         </div>
