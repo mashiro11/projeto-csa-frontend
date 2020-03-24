@@ -26,7 +26,7 @@ const Filters = ({filterOptions, onSelect, sortFunctions}) => {
           <h5>Ordenar por:</h5>
           <div>
             {selectOneOptions.map((option, index) =>
-              <RadioButton forceState={selectOneState[index]}
+              <RadioButton key={index} forceState={selectOneState[index]}
                 onClick={ (value) => {
                   if(value){
                     let forcedState = [false, false, false, false]

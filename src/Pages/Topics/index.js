@@ -79,7 +79,7 @@ const Topics = () => {
       <div style={styles.contentContainer(layout)}>
         {layout === 'MOBILE' ?
           <span>
-            <span>Filtros</span>
+            <span onClick={ () => console.log('Open drawer')}>Filtros</span>
             <span> </span>
             <span style={styles.filterQuant}>5</span>
           </span>
