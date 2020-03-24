@@ -1,8 +1,8 @@
 import React from 'react'
 
-const RadioButton = ({children, initialState, onClick}) => {
+const RadioButton = ({forceState, children, initialState, onClick}) => {
   const [checked, setChecked] = React.useState(initialState)
-
+  if(forceState !== checked) setChecked(forceState)
   return(
     <div>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none"

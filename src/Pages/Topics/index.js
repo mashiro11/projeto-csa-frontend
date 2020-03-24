@@ -22,14 +22,51 @@ const Topics = () => {
     console.log('error:', error)
   }
 
+  const getTopics = (data) => {
+    setTopics(data.sort((a, b) =>{
+      const date1 = new Date(a.messages[a.messages.length - 1].createdAt)
+      const date2 = new Date(b.messages[b.messages.length - 1].createdAt)
+      return date1.getTime() > date2.getTime() ?
+      -1 : 1
+    }))
+  }
+
   const loadPage = () => {
-    request('get', 'topics', setTopics, handleError)
+    request('get', 'topics', getTopics, handleError)
     request('get', `routine-categories`, setRoutines, handleError)
   }
 
   const filterOption = (filter) => (set) => () => {
     set ? setFilters([...filters, filter]) : setFilters(filters.filter( item => item !== filter))
   }
+
+  const sortByAnswerCount = order => () => {
+    let temp = [...topics]
+    let first = order === 0 ? -1 : 1
+    let second = order === 0 ? 1 : -1
+    setTopics(temp.sort((a, b) => a.messages.length < b.messages.length? first : second ))
+  }
+
+  const sortByLastAnswer = order => () => {
+    let temp = [...topics]
+    let first = order === 0 ? -1 : 1
+    let second = order === 0 ? 1 : -1
+    setTopics(
+      temp.sort((a, b) => {
+        const date1 = new Date(a.messages[a.messages.length - 1].createdAt)
+        const date2 = new Date(b.messages[b.messages.length - 1].createdAt)
+        return date1.getTime() < date2.getTime() ?
+        first : second
+      })
+    )
+  }
+
+  const sortFunctions = [
+    sortByAnswerCount(1),
+    sortByAnswerCount(0),
+    sortByLastAnswer(1),
+    sortByLastAnswer(0)
+  ]
 
   React.useEffect( loadPage, [])
 
@@ -40,8 +77,15 @@ const Topics = () => {
       </div>
 
       <div style={styles.contentContainer(layout)}>
-        <Filters filterOptions={routines} onSelect={filterOption}/>
-
+        {layout === 'MOBILE' ?
+          <span>
+            <span>Filtros</span>
+            <span> </span>
+            <span style={styles.filterQuant}>5</span>
+          </span>
+          :
+          <Filters filterOptions={routines} onSelect={filterOption} sortFunctions={sortFunctions} />
+        }
         <div style={ layout === 'DESKTOP' ? {flexGrow: 2, marginLeft: 30} : null}>
           { layout === 'DESKTOP' ?
             <div>
