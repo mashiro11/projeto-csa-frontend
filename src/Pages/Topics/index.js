@@ -36,7 +36,7 @@ const Topics = () => {
     request('get', `routine-categories`, setRoutines, handleError)
   }
 
-  const filterOption = (filter) => (set) => () => {
+  const filterOption = (filter) => (set) => {
     set ? setFilters([...filters, filter]) : setFilters(filters.filter( item => item !== filter))
   }
 
