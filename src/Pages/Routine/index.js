@@ -10,7 +10,7 @@ const Routine = (props) => {
   const handleError = (error) => {
     console.log('error:', error)
   }
-  React.useEffect(() => request('get', `routines/${props.match.params.id}`, setRoutine, handleError), [])
+  React.useEffect(() => request('get', `routines/${props.match.params.id}`, setRoutine, handleError), [props.match.params.id])
   return(
     <div>
       {routine?

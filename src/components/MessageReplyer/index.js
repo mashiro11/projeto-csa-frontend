@@ -19,7 +19,7 @@ const MessageReplyer = ({onSend}) => {
   return (
     <div style={styles.container}>
       { !reply ?
-        <a style={styles.replyButton} onClick={() => setReply(true)}> RESPONDER</a>
+        <div className='textButton' style={styles.replyButton} onClick={() => setReply(true)}> RESPONDER</div>
         : <MessageSender onCancel={() => setReply(false)} onSend={onSend}/>
         }
     </div>

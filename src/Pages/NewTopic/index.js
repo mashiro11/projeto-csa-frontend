@@ -52,7 +52,7 @@ const NewTopic = (props) => {
     const relatedRoutine = props.location.state
     if(relatedRoutine) setRelatedRoutines([relatedRoutine.id])
     request('get','routines', handleRoutines, handleError)
-  }, [])
+  }, [props.location.state])
 
 
   return(
