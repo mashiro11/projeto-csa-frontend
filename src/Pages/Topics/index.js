@@ -17,9 +17,11 @@ const Topics = () => {
   const [topics, setTopics] = React.useState([])
   const [routines, setRoutines] = React.useState([])
   const [filters, setFilters] = React.useState([])
+  const [error, setError] = React.useState({})
 
   const handleError = (error) => {
     console.log('error:', error)
+    setError(error)
   }
 
   const getTopics = (data) => {
@@ -71,7 +73,7 @@ const Topics = () => {
   ]
 
   React.useEffect( loadPage, [])
-
+  console.log('error type:', typeof(error))
   return (
     <div>
       <div style={styles.bannerContainer}>
@@ -111,13 +113,14 @@ const Topics = () => {
           </div>
           <hr/>
 
-          {topics.length === 0 ?
-            <div>Fetching data...</div>
-          : topics
-            .filter( topic =>
-              topic.routines?.some( routine => filters.length > 0 ? filters.includes(routine.name) : true )
-            ).map( (item, index) =>
-            <TopicListItem topic={item} key={index}/>
+          {error.length > 0 ? <div>Problema de conexão</div>
+            :topics.length === 0 ?
+              <div>Buscando dados das csas...</div>
+            : topics
+              .filter( topic =>
+                topic.routines?.some( routine => filters.length > 0 ? filters.includes(routine.name) : true )
+              ).map( (item, index) =>
+              <TopicListItem topic={item} key={index}/>
           )}
         </div>
 

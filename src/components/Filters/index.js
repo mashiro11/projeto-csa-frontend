@@ -26,7 +26,9 @@ const Filters = ({filterOptions, onSelect, sortFunctions}) => {
           <h5>Ordenar por:</h5>
           <div>
             {selectOneOptions.map((option, index) =>
-              <RadioButton key={index} forceState={selectOneState[index]}
+              <RadioButton key={index}
+                label={option}
+                forceState={selectOneState[index]}
                 onClick={ (value) => {
                   if(value){
                     let forcedState = [false, false, false, false]
@@ -35,9 +37,7 @@ const Filters = ({filterOptions, onSelect, sortFunctions}) => {
                     sortFunctions[index]()
                   }
                 }}
-              >
-                {option}
-              </RadioButton>
+              />
             )}
           </div>
         <div>
@@ -54,8 +54,7 @@ const Filters = ({filterOptions, onSelect, sortFunctions}) => {
                 ?.filter( routine => routine.name.toLowerCase().includes(searchValue.toLowerCase()))
                 .map((routine, index)=>
                 <div key={index}>
-                  <Checkbox onCheck={onSelect(routine.name)}/>
-                  {routine.name}
+                  <Checkbox label={routine.name} onCheck={onSelect(routine.name)}/>
                 </div>
               )}
               </Drawer>

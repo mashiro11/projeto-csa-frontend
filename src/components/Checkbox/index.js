@@ -1,9 +1,10 @@
 import React from 'react'
 
-const Checkbox = ({checked, onCheck}) => {
+const Checkbox = ({label, checked, onCheck}) => {
   const [value, setValue] = React.useState(checked)
   return(
-    <span>
+    <div style={{position: 'relative', display: 'flex', flexOrientation: 'horizontal'}}>
+      <span style={{position: 'relative', top: 0}}>
       {value?
         <svg onClick={ () => {
             setValue(!value)
@@ -20,6 +21,8 @@ const Checkbox = ({checked, onCheck}) => {
         </svg>
       }
     </span>
+      <span>{label}</span>
+    </div>
   )
 }
 
