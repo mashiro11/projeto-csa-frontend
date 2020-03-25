@@ -35,7 +35,7 @@ const Topics = () => {
 
   const loadPage = () => {
     request('get', 'topics', getTopics, handleError)
-    request('get', `routine-categories`, setRoutines, handleError)
+    request('get', 'routine-categories', setRoutines, handleError)
   }
 
   const filterOption = (filter) => (set) => {
@@ -76,8 +76,8 @@ const Topics = () => {
   console.log('error type:', typeof(error))
   return (
     <div>
-      <div style={styles.bannerContainer}>
-        <div style={styles.bannerTitle}>CONVERSAS</div>
+      <div className='bannerContainer'>
+        <div className='bannerTitle'>CONVERSAS</div>
       </div>
 
       <div style={styles.contentContainer(layout)}>

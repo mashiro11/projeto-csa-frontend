@@ -42,7 +42,7 @@ const Topic = (props) => {
   const user = React.useContext(UserContext)
   const [topic, setTopic] = React.useState({})
   const [reply, setReply] = React.useState(false)
-
+  const [error, setError] = React.useState({})
   const loadPage = (data) => {
     setReply(false)
     setTopic({})
@@ -50,7 +50,7 @@ const Topic = (props) => {
   }
 
   const handleError = (error) => {
-    console.log('error:', error)
+    setError(error)
   }
 
   const addMessage = (model, text) => {
@@ -65,12 +65,14 @@ const Topic = (props) => {
     request('put', `messages/${id}`, loadPage, handleError, {text: text}, true)
   }
   React.useEffect( loadPage, [])
-
+  console.log('error:', Object.values(error))
   return(
     <div style={styles.container}>
-      {topic.id ?
+      {error.response ?
+        <div>{error.response}</div>
+        :topic.id ?
         <div style={layout === 'DESKTOP' ? styles.dContainer : null}>
-          <div style={styles.header}>
+          <header>
             <h2 style={styles.title}>{topic.name}</h2>
             <div style={styles.routinesBox}>
               <div style={styles.subinfo}>Práticas relacionadas a esse tema</div>
@@ -78,7 +80,7 @@ const Topic = (props) => {
                 <Link style={styles.routines} to={`/rotinas/rotina/${item.id}`} key={index}>{item.name}</Link>
               )}
             </div>
-          </div>
+          </header>
 
           {!reply ?
             <div style={styles.messagesList}>

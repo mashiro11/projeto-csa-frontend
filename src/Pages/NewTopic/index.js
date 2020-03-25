@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 import UserContext from '../../UserContext'
+import Drawer from '../../components/Drawer'
 import Checkbox from '../../components/Checkbox'
 
 import request from '../../request.js'
@@ -56,33 +57,37 @@ const NewTopic = (props) => {
 
 
   return(
-    <div>
+    <div style={{position: 'relative'}}>
     {newTopic.id ? <Redirect to={`/conversas/conversa/${newTopic.id}`} />
-      : <div>
-          <div>
-            <div>Conversas</div>
-            <div>Publicar nova</div>
-          </div>
+  : <div style={{margin: '0 auto'}}>
+          <header>
+            Publicar nova conversa
+          </header>
           <div>
             <div>
               <div>Tema</div>
-              <input type='text' value={topicName}
+              <input className='text' type='text' value={topicName}
                 onChange={ e => setTopicName(e.target.value)}/>
 
               <div>Comentário sobre o tema</div>
-              <input type='text' value={firstMessage}
+              <textarea value={firstMessage}
                 onChange={ e => setFirstMessage(e.target.value)} />
 
               <div>Anexos</div>
               <div className='link'>Insira uma imagem ou um documento</div>
 
               <div>Práticas relacionadas ao tema</div>
-              <div className='link'>Selecione uma ou mais práticas</div>
-              { routines? routines.map((routine, index)=>
+              <Drawer initialState='closed' moveLabelDown
+                labelType='text'
+                openLabel='Selecione uma ou mais práticas'
+                closeLabel='Fechar lista de práticas'
+              >
+                { routines? routines.map((routine, index)=>
                 <div key={index}>
-                  <Checkbox onCheck={editRelatedRoutine(routine.id)} checked={props.location.state ? routine.id === props.location.state.id : false} />{routine.name}
+                  <Checkbox label={routine.name} onCheck={editRelatedRoutine(routine.id)} checked={props.location.state ? routine.id === props.location.state.id : false} />
                 </div>
               ):null}
+              </Drawer>
               <div className='button' onClick={submit}>
                 PUBLICAR
               </div>

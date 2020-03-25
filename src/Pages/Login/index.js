@@ -31,20 +31,22 @@ const Login = ({setUser}) => {
   }
 
   return(
-    <div>
-      Login:
-      <div>
-        <span>Usuário:</span>
-        <input type='text' value={identifier}
-          onChange={(e) => setIdentifier(e.target.value) }/>
+    <div style={{position: 'relative'}}>
+      <div style={{margin: '0 auto', width: '30%', backgroundColor: '#efefef', padding: 30}}>
+        Login:
+        <div>
+          <span>Usuário:</span>
+          <input className='text' type='text' value={identifier}
+            onChange={(e) => setIdentifier(e.target.value) }/>
+        </div>
+        <div>
+          <span>Senha:</span>
+          <input className='text' type='password' value={password}
+          onChange={(e) => setPassword(e.target.value) }/>
+        </div>
+        <button onClick={loginRequest}>Entrar</button>
+        {user.username ? <Redirect to='/' /> : null}
       </div>
-      <div>
-        <span>Senha:</span>
-        <input type='password' value={password}
-        onChange={(e) => setPassword(e.target.value) }/>
-      </div>
-      <button onClick={loginRequest}>Entrar</button>
-      {user.username ? <Redirect to='/' /> : null}
     </div>
   )
 }
