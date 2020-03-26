@@ -11,6 +11,7 @@ import Navbar from './components/Navbar'
 import Home from './Pages/Home'
 import About from './Pages/About'
 import Csas from './Pages/Csas'
+import Csa from './Pages/Csa'
 import Routines from './Pages/Routines'
 import Routine from './Pages/Routine'
 import Topics from './Pages/Topics'
@@ -55,6 +56,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/sobre" component={About} />
           <Route exact path="/csas" component={Csas} />
+          <Route exact path="/csas/csa/:id" component={Csa} />
 
           <Route exact path="/rotinas" component={Routines} />
           <Route path='/rotinas/rotina/:id' component={Routine} />
