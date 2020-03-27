@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab&display=swap');
 
 header {
-  padding: 20;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1)
+  position: relative;
+  padding: 50px 0;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content{
+  width: 60%;
+  margin: 0 auto
 }
 
 body {

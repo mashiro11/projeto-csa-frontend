@@ -29,7 +29,7 @@ const Topic = (props) => {
   const handleError = (err) => {
     if(!error.isAxiosError) setError(err)
   }
-  
+
   const addMessage = (model, text) => {
     request('post', 'messages',  loadPage, handleError, {...model, user: user.id, text: text}, true)
   }
@@ -49,44 +49,50 @@ const Topic = (props) => {
         <ErrorHandler tryagainTime={5} onTryAgain={retry} />
         :
         topic.id ?
-        <div style={layout === 'DESKTOP' ? styles.dContainer : null}>
-          <header>
-            <h2 style={styles.title}>{topic.name}</h2>
-            <div style={styles.routinesBox}>
-              <div style={styles.subinfo}>Práticas relacionadas a esse tema</div>
-              { topic.routines.map( (item, index) =>
-                <Link style={styles.routines} to={`/rotinas/rotina/${item.id}`} key={index}>{item.name}</Link>
-              )}
-            </div>
-          </header>
+          <div style={{position: 'relative'}}>
+            <header>
+              <div className='content'>
+                <h2 style={styles.title}>{topic.name}</h2>
+                <div style={styles.routinesBox}>
+                  <div style={styles.subinfo}>Práticas relacionadas a esse tema</div>
+                  { topic.routines.map( (item, index) =>
+                    <Link style={styles.routines} to={`/rotinas/rotina/${item.id}`} key={index}>{item.name}</Link>
+                  )}
+                </div>
+              </div>
+            </header>
 
-          {!reply ?
-            <div style={styles.messagesList}>
-              {topic.messages.map( (item, index) =>
-                <React.Fragment key={index}>
-                  { index > 0 ? <hr/> : null }
-                  <Message message={item} onEdit={ editMessage } onDelete={ deleteMessage } />
-                  {user.id ?
-                    <MessageReplyer
-                      onSend={ (text) => () => {
-                        addMessage({message: item.id}, text)
-                      }}
-                    />
-                    :null
-                  }
-                </React.Fragment>
-              )}
+            <div className='content'>
+              {!reply ?
+                <div style={styles.messagesList}>
+                  {topic.messages.map( (item, index) =>
+                    <React.Fragment key={index}>
+                      { index > 0 ? <hr/> : null }
+                      <Message message={item} onEdit={ editMessage } onDelete={ deleteMessage } />
+                      {user.id ?
+                        <MessageReplyer
+                          onSend={ (text) => () => {
+                            addMessage({message: item.id}, text)
+                          }}
+                        />
+                        :null
+                      }
+                    </React.Fragment>
+                  )}
+                </div>
+                : <MessageSender onCancel={ () => setReply(false) }
+                    onSend={ (text) => () => addMessage({topic: topic.id}, text)}
+                  />
+              }
+              {user.id && !reply ?
+                <div className='button large centeredH' onClick={() => setReply(true) }>NOVA MENSAGEM</div>
+                : null
+              }
             </div>
-            : <MessageSender onCancel={ () => setReply(false) }
-                onSend={ (text) => () => addMessage({topic: topic.id}, text)}
-              />
-          }
-          {user.id && !reply ?
-            <div className='button large centeredH' onClick={() => setReply(true) }>NOVA MENSAGEM</div>
-            : null
-          }
-        </div>
-        : <div>Fetching data...</div>}
+          </div>
+          :
+          <div>Buscando informações da conversa...</div>
+    }
     </div>
   )
 }

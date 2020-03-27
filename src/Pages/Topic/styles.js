@@ -1,12 +1,6 @@
 import React from 'react'
 
 const styles={
-  container:{
-  },
-  dContainer:{
-    width: '60%',
-    margin: '0 auto'
-  },
   header:{
     padding: 20,
     boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)'
