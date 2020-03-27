@@ -10,34 +10,8 @@ import ErrorHandler from '../../components/ErrorHandler'
 import Message from '../../components/Message'
 import MessageReplyer from '../../components/MessageReplyer'
 import MessageSender from '../../components/MessageSender'
+import styles from './styles.js'
 
-const styles={
-  container:{
-  },
-  dContainer:{
-    width: '60%',
-    margin: '0 auto'
-  },
-  header:{
-    padding: 20,
-    boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)'
-  },
-  subinfo:{
-    color: '#979797'
-  },
-  messagesList:{
-    paddingTop: 10,
-    paddingBottom: 20
-  },
-  routinesBox:{
-    marginBottom: 20
-  },
-  routines:{
-    marginRight: 10,
-    paddingRight: 10,
-    borderRight: '1px solid #686868'
-  }
-}
 const Topic = (props) => {
   const layout = React.useContext(LayoutContext)
   const user = React.useContext(UserContext)
@@ -52,16 +26,20 @@ const Topic = (props) => {
   }
   const retry = () => setError({})
 
+  const handleError = (err) => {
+    if(!error.isAxiosError) setError(err)
+  }
+  
   const addMessage = (model, text) => {
-    request('post', 'messages',  loadPage, setError, {...model, user: user.id, text: text}, true)
+    request('post', 'messages',  loadPage, handleError, {...model, user: user.id, text: text}, true)
   }
 
   const deleteMessage = (id) => () => {
-    request('delete', `messages/${id}`, loadPage, setError, null, true)
+    request('delete', `messages/${id}`, loadPage, handleError, null, true)
   }
 
   const editMessage = (id) => (text) => () => {
-    request('put', `messages/${id}`, loadPage, setError, {text: text}, true)
+    request('put', `messages/${id}`, loadPage, handleError, {text: text}, true)
   }
   React.useEffect(loadPage, [error])
 

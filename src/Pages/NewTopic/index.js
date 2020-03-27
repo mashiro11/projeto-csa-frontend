@@ -28,9 +28,13 @@ const NewTopic = (props) => {
 
   const retry = () => setError({})
 
+  const handleError = (err) => {
+    if(!error.isAxiosError) setError(err)
+  }
+
   const submit = () => {
     if(relatedRoutines.length > 0){
-      request('post', 'topics', handleData, setError,
+      request('post', 'topics', handleData, handleError,
       {
         name: topicName,
         routines: relatedRoutines,
@@ -53,7 +57,7 @@ const NewTopic = (props) => {
   React.useEffect( () => {
     const relatedRoutine = props.location.state
     if(relatedRoutine) setRelatedRoutines([relatedRoutine.id])
-    request('get','routines', handleRoutines, setError)
+    request('get','routines', handleRoutines, handleError)
   }, [error])
 
 

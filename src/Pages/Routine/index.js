@@ -10,9 +10,14 @@ const Routine = (props) => {
   const user = React.useContext(UserContext)
   const [routine, setRoutine] = React.useState({})
   const [error, setError] = React.useState({})
+
   const retry = () => setError({})
 
-  React.useEffect(() => request('get', `routines/${props.match.params.id}`, setRoutine, setError), [error])
+  const handleError = (err) => {
+    if(!error.isAxiosError) setError(err)
+  }
+
+  React.useEffect(() => request('get', `routines/${props.match.params.id}`, setRoutine, handleError), [error])
   return(
     <div>
       {error.isAxiosError?

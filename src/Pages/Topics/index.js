@@ -6,9 +6,11 @@ import LayoutContext from '../../LayoutContext.js'
 import UserContext from '../../UserContext.js'
 
 import ErrorHandler from '../../components/ErrorHandler'
+import Banner from '../../components/Banner'
 import Filters from '../../components/Filters'
 import TopicListItem from '../../components/TopicListItem'
 
+import bannerImg from './banner.jpg'
 import styles from './styles.js'
 
 
@@ -20,6 +22,9 @@ const Topics = () => {
   const [filters, setFilters] = React.useState([])
   const [error, setError] = React.useState({})
 
+  const handleError = (err) => {
+    if(!error.isAxiosError) setError(err)
+  }
   const retry = () => setError({})
 
   const getTopics = (data) => {
@@ -32,8 +37,8 @@ const Topics = () => {
   }
 
   const loadPage = () => {
-    request('get', 'topics', getTopics, setError)
-    request('get', 'routine-categories', setRoutines, setError)
+    request('get', 'topics', getTopics, handleError)
+    request('get', 'routine-categories', setRoutines, handleError)
   }
 
   const filterOption = (filter) => (set) => {
@@ -73,14 +78,12 @@ const Topics = () => {
   React.useEffect( loadPage, [error])
   return (
     <div>
-      <div className='bannerContainer'>
-        <div className='bannerTitle'>CONVERSAS</div>
-      </div>
+      <Banner title='CONVERSAS' image={bannerImg}/>
 
       <div style={styles.contentContainer(layout)}>
         {layout === 'MOBILE' ?
           <span>
-            <span onClick={ () => console.log('Open drawer')}>Filtros</span>
+            <span className='textButton' onClick={ () => console.log('Open drawer')}>Filtros</span>
             <span> </span>
             <span style={styles.filterQuant}>5</span>
           </span>
