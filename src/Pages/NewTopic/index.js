@@ -2,6 +2,8 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 import UserContext from '../../UserContext'
+
+import ErrorHandler from '../../components/ErrorHandler'
 import Drawer from '../../components/Drawer'
 import Checkbox from '../../components/Checkbox'
 
@@ -11,6 +13,7 @@ const NewTopic = (props) => {
   const user = React.useContext(UserContext)
   const [routines, setRoutines] = React.useState([])
   const [relatedRoutines, setRelatedRoutines] = React.useState([])
+  const [error, setError] = React.useState({})
   const [newTopic, setNewTopic] = React.useState({notSent: true})
   const [topicName, setTopicName] = React.useState('')
   const [firstMessage, setFirstMessage] = React.useState('')
@@ -23,13 +26,11 @@ const NewTopic = (props) => {
     setNewTopic(data)
   }
 
-  const handleError = (error) => {
-    console.log('error:', error)
-  }
+  const retry = () => setError({})
 
   const submit = () => {
     if(relatedRoutines.length > 0){
-      request('post', 'topics', handleData, handleError,
+      request('post', 'topics', handleData, setError,
       {
         name: topicName,
         routines: relatedRoutines,
@@ -52,8 +53,8 @@ const NewTopic = (props) => {
   React.useEffect( () => {
     const relatedRoutine = props.location.state
     if(relatedRoutine) setRelatedRoutines([relatedRoutine.id])
-    request('get','routines', handleRoutines, handleError)
-  }, [props.location.state])
+    request('get','routines', handleRoutines, setError)
+  }, [error])
 
 
   return(
@@ -82,11 +83,14 @@ const NewTopic = (props) => {
                 openLabel='Selecione uma ou mais práticas'
                 closeLabel='Fechar lista de práticas'
               >
-                { routines? routines.map((routine, index)=>
-                <div key={index}>
-                  <Checkbox label={routine.name} onCheck={editRelatedRoutine(routine.id)} checked={props.location.state ? routine.id === props.location.state.id : false} />
-                </div>
-              ):null}
+                {error.isAxiosError?
+                  <ErrorHandler tryagainTime={5} onTryAgain={retry} />
+                  :
+                  routines? routines.map((routine, index)=>
+                    <div key={index}>
+                      <Checkbox label={routine.name} onCheck={editRelatedRoutine(routine.id)} checked={props.location.state ? routine.id === props.location.state.id : false} />
+                    </div>
+                  ):null}
               </Drawer>
               <div className='button' onClick={submit}>
                 PUBLICAR

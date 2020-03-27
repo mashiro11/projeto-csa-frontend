@@ -5,6 +5,7 @@ import request from '../../request.js'
 import LayoutContext from '../../LayoutContext.js'
 import UserContext from '../../UserContext.js'
 
+import ErrorHandler from '../../components/ErrorHandler'
 import Filters from '../../components/Filters'
 import TopicListItem from '../../components/TopicListItem'
 
@@ -19,10 +20,7 @@ const Topics = () => {
   const [filters, setFilters] = React.useState([])
   const [error, setError] = React.useState({})
 
-  const handleError = (error) => {
-    console.log('error:', error)
-    setError(error)
-  }
+  const retry = () => setError({})
 
   const getTopics = (data) => {
     setTopics(data.sort((a, b) =>{
@@ -34,8 +32,8 @@ const Topics = () => {
   }
 
   const loadPage = () => {
-    request('get', 'topics', getTopics, handleError)
-    request('get', 'routine-categories', setRoutines, handleError)
+    request('get', 'topics', getTopics, setError)
+    request('get', 'routine-categories', setRoutines, setError)
   }
 
   const filterOption = (filter) => (set) => {
@@ -72,8 +70,7 @@ const Topics = () => {
     sortByAnswerCount(0)
   ]
 
-  React.useEffect( loadPage, [])
-  console.log('error type:', typeof(error))
+  React.useEffect( loadPage, [error])
   return (
     <div>
       <div className='bannerContainer'>
@@ -113,15 +110,19 @@ const Topics = () => {
           </div>
           <hr/>
 
-          {error.length > 0 ? <div>Problema de conexão</div>
-            :topics.length === 0 ?
+          {error.isAxiosError > 0 ?
+            <ErrorHandler tryagainTime={5} onTryAgain={retry} />
+            :
+            topics.length === 0 ?
               <div>Buscando dados das csas...</div>
-            : topics
-              .filter( topic =>
-                topic.routines?.some( routine => filters.length > 0 ? filters.includes(routine.name) : true )
-              ).map( (item, index) =>
-              <TopicListItem topic={item} key={index}/>
-          )}
+              :
+              topics
+                .filter( topic =>
+                  topic.routines?.some( routine => filters.length > 0 ? filters.includes(routine.name) : true )
+                ).map( (item, index) =>
+                  <TopicListItem topic={item} key={index}/>
+                )
+          }
         </div>
 
         { user.username && layout === 'MOBILE' ?

@@ -6,6 +6,7 @@ import LayoutContext from '../../LayoutContext'
 
 import request from '../../request.js'
 
+import ErrorHandler from '../../components/ErrorHandler'
 import Message from '../../components/Message'
 import MessageReplyer from '../../components/MessageReplyer'
 import MessageSender from '../../components/MessageSender'
@@ -43,34 +44,33 @@ const Topic = (props) => {
   const [topic, setTopic] = React.useState({})
   const [reply, setReply] = React.useState(false)
   const [error, setError] = React.useState({})
+
   const loadPage = (data) => {
     setReply(false)
     setTopic({})
-    request('get',`topics/${props.match.params.id}`, setTopic, handleError)
+    request('get',`topics/${props.match.params.id}`, setTopic, setError)
   }
-
-  const handleError = (error) => {
-    setError(error)
-  }
+  const retry = () => setError({})
 
   const addMessage = (model, text) => {
-    request('post', 'messages',  loadPage, handleError, {...model, user: user.id, text: text}, true)
+    request('post', 'messages',  loadPage, setError, {...model, user: user.id, text: text}, true)
   }
 
   const deleteMessage = (id) => () => {
-    request('delete', `messages/${id}`, loadPage, handleError, null, true)
+    request('delete', `messages/${id}`, loadPage, setError, null, true)
   }
 
   const editMessage = (id) => (text) => () => {
-    request('put', `messages/${id}`, loadPage, handleError, {text: text}, true)
+    request('put', `messages/${id}`, loadPage, setError, {text: text}, true)
   }
-  React.useEffect( loadPage, [])
-  console.log('error:', Object.values(error))
+  React.useEffect(loadPage, [error])
+
   return(
     <div style={styles.container}>
-      {error.response ?
-        <div>{error.response}</div>
-        :topic.id ?
+      {error.isAxiosError ?
+        <ErrorHandler tryagainTime={5} onTryAgain={retry} />
+        :
+        topic.id ?
         <div style={layout === 'DESKTOP' ? styles.dContainer : null}>
           <header>
             <h2 style={styles.title}>{topic.name}</h2>

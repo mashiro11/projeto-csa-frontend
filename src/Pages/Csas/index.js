@@ -2,29 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import request from '../../request.js'
 
+import ErrorHandler from '../../components/ErrorHandler'
+
 const Csas = () => {
   const [csas, setCsas] = React.useState([])
   const [error, setError] = React.useState({})
-  const [timer, setTimer] = React.useState(0)
 
-  const handleError = (error) => {
-    setError(error)
-    setTimer(5)
-  }
+  const retry = () => setError({})
 
-  React.useEffect(() => {
-    if(timer <= 0){
-      setError({})
-      request('get', 'csas', setCsas, handleError)
-    }
-    else
-      window.setTimeout(()=>setTimer(timer - 1), 1000)
-    }, [timer])
+  React.useEffect(() => request('get', 'csas', setCsas, setError), [error])
 
   return (
     <div>
       {error.isAxiosError ?
-        <div>Problema de conexão. Tentando novamente em {timer} segundos</div>
+        <ErrorHandler tryagainTime={5} onTryAgain={retry} />
         :
         <div>
           CSAs:
