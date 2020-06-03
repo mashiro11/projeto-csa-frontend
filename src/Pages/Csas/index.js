@@ -38,7 +38,6 @@ const Csas = () => {
         :
         <Filters />
       }
-
       <div style={ layout === 'DESKTOP' ? {flexGrow: 2, marginLeft: 30} : null}>
         <div className='onExtremes'>
           <h3>LISTA DE CSAs</h3>
