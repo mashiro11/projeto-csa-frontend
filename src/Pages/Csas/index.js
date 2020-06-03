@@ -7,6 +7,7 @@ import request from '../../request.js'
 import ErrorHandler from '../../components/ErrorHandler'
 import Filters from '../../components/Filters'
 import CsaListItem from '../../components/CsaListItem'
+import styles from './styles.js'
 
 const Csas = () => {
   const layout = React.useContext(LayoutContext)
@@ -22,7 +23,7 @@ const Csas = () => {
   React.useEffect(() => request('get', 'csas', setCsas, handleError), [error])
 
   return (
-    <div>
+    <div style={styles.contentContainer(layout)}>
       {layout === 'MOBILE' ?
         <div>Filtros</div>
         :
@@ -32,16 +33,10 @@ const Csas = () => {
         <ErrorHandler tryagainTime={5} onTryAgain={retry} />
         :
         <div>
-          LISTA DE CSAS:
-          {!csas.length ?
-            <div> Buscando CSAs...
-            </div>
-          :null}
-          <div>
-            {csas.map( (csa, index) =>
-              <CsaListItem csa={csa} />
-            )}
+          <div className='onExtremes'>
+            <h3>LISTA DE CONVERSAS</h3>
           </div>
+          <hr style={{marginTop: 0}}/>
         </div>
       }
     </div>

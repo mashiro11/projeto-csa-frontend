@@ -6,7 +6,7 @@ import LayoutContext from '../../LayoutContext.js'
 import Drawer from '../Drawer'
 import Searchbox from '../Searchbox'
 import Checkbox from '../Checkbox'
-
+import Button from 'components/Button'
 const Filters = ({filterOptions, onSelect, sortFunctions}) => {
 
   const layout = React.useContext(LayoutContext)
@@ -63,7 +63,7 @@ const Filters = ({filterOptions, onSelect, sortFunctions}) => {
               <div><Checkbox/>Outras práticas</div>
             </Drawer>
           </Drawer>
-          <div>LIMPAR FILTROS</div>
+          <Button>LIMPAR FILTROS</Button>
         </div>
       </div>
     </div>
