@@ -81,6 +81,8 @@ const Topics = () => {
       <Banner title='CONVERSAS' image={bannerImg}/>
 
       <div style={styles.contentContainer(layout)}>
+
+
         {layout === 'MOBILE' ?
           <span>
             <span className='textButton' onClick={ () => console.log('Open drawer')}>Filtros</span>
@@ -90,6 +92,8 @@ const Topics = () => {
           :
           <Filters filterOptions={routines} onSelect={filterOption} sortFunctions={sortFunctions} />
         }
+
+
         <div style={ layout === 'DESKTOP' ? {flexGrow: 2, marginLeft: 30} : null}>
           { layout === 'DESKTOP' ?
             <div>
@@ -126,6 +130,8 @@ const Topics = () => {
                   <TopicListItem topic={item} key={index}/>
                 )
           }
+
+
         </div>
 
         { user.username && layout === 'MOBILE' ?

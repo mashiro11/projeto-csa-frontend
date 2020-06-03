@@ -11,7 +11,7 @@ import styles from './styles.js'
 
 const Csas = () => {
   const layout = React.useContext(LayoutContext)
-  const [csas, setCsas] = React.useState([])
+  const [state, setState] = React.useState({})
   const [error, setError] = React.useState({})
 
   const retry = () => setError({})
@@ -20,25 +20,50 @@ const Csas = () => {
     if(!error.isAxiosError) setError(err)
   }
 
-  React.useEffect(() => request('get', 'csas', setCsas, handleError), [error])
+  const getData = (csasData) => {
+    setState({
+      csas: csasData,
+      regions: csasData.reduce( (regionsList, csa ) => [...regionsList, csa.region], [])
+    })
+  }
 
+  React.useEffect(() => request('get', 'csas', getData, handleError), [error])
+  const { csas, regions } = state
+  console.log('state:', state)
   return (
     <div style={styles.contentContainer(layout)}>
+
       {layout === 'MOBILE' ?
         <div>Filtros</div>
         :
         <Filters />
       }
-      {error.isAxiosError ?
-        <ErrorHandler tryagainTime={5} onTryAgain={retry} />
-        :
-        <div>
-          <div className='onExtremes'>
-            <h3>LISTA DE CONVERSAS</h3>
-          </div>
-          <hr style={{marginTop: 0}}/>
+
+
+
+      <div style={ layout === 'DESKTOP' ? {flexGrow: 2, marginLeft: 30} : null}>
+        <div className='onExtremes'>
+          <h3>LISTA DE CSAs</h3>
         </div>
-      }
+        <hr style={{marginTop: 0}}/>
+        {error.isAxiosError ?
+          <ErrorHandler tryagainTime={5} onTryAgain={retry} />
+          :
+          <div>
+            {regions && regions.map((region, index) =>
+              <div key={index}>
+                <div>{region.name}</div>
+                {csas.filter((csa, i) => csa.region === region)
+                     .map((csa, i) =>
+                  <div key={i}>{csa.nome}</div>
+                )}
+              </div>
+            )}
+          </div>
+        }
+      </div>
+
+
     </div>
   )
 }
