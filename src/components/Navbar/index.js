@@ -17,9 +17,15 @@ const Navbar = () => {
   const user = React.useContext(UserContext)
   const [drawerState, setDrawerState] = React.useState(false)
 
+  const links = () =>
+    Object.values(applicationPages).map( (item, index) =>
+      <Link style={layout === 'DESKTOP' ? styles.pageLink : null} to={item.link} key={index} >{item.text}</Link>
+    )
+
   return (
     <div>
       <div style={styles.container}>
+{/*Menu button for mobile*/}
         {layout === 'MOBILE' ?
           <>
             <MenuIcon onClick={() => setDrawerState(true)} style={styles.menuIcon}/>
@@ -29,36 +35,36 @@ const Navbar = () => {
               onOpen={() => setDrawerState(true)}
               onClose={() => setDrawerState(false)}
             >
-              {Object.values(applicationPages).map( (item, index) =>
-                <Link to={item.link} key={index} >{item.text}</Link>
-              )}
+              {links()}
             </SwipeableDrawer>
           </>
           : null
         }
 
+{/*Home link*/}
         <Link style={layout === 'DESKTOP'? styles.logoD : styles.logoM} to='/'>
           <img src={Logo} style={{textAlign: 'inherit'}} alt='CSAs Brasília'/>
         </Link>
 
         <div style={styles.linksUser}>
+{/*Pages links*/}
           {layout === 'DESKTOP' ?
             <div style={styles.linksContainer}>
-              {Object.values(applicationPages).map( (item, index) =>
-                <Link style={styles.pageLink} to={item.link} key={index} >{item.text}</Link>
-               )}
+              {links()}
             </div>
           : null}
 
+{/*User button*/}
           <Link to='/login'>
             {user.username ?
               <img src='https://i.pravatar.cc/38' alt='user' className='avatar' />
-              : <UserIcon />}
+              : <UserIcon />
+            }
           </Link>
         </div>
       </div>
 
-      {/*Prevent divs from positioning under navbar at top*/}
+{/*Prevent divs from positioning under navbar at top*/}
       <div style={styles.spacer}></div>
     </div>
   )

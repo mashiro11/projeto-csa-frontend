@@ -1,6 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+
+
 import LayoutContext from '../../LayoutContext'
 import request from '../../request.js'
 
@@ -48,13 +54,17 @@ const Csas = () => {
           :
           <div>
             {regions && regions.map((region, index) =>
-              <div key={index}>
-                <div>{region.name}</div>
-                {csas.filter((csa, i) => csa.region === region)
-                     .map((csa, i) =>
-                  <div key={i}>{csa.nome}</div>
-                )}
-              </div>
+              <ExpansionPanel key={index}>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
+                  {region.name}
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  {csas.filter((csa, i) => csa.region === region)
+                       .map((csa, i) =>
+                    <div key={i}>{csa.nome}</div>
+                  )}
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
             )}
           </div>
         }
