@@ -28,7 +28,7 @@ const Filters = ({filterOptions, onSelect, sortFunctions}) => {
             {selectOneOptions.map((option, index) =>
               <RadioButton key={index}
                 label={option}
-                forceState={selectOneState[index]}
+                check={selectOneState[index]}
                 onClick={ (value) => {
                   if(value){
                     let forcedState = [false, false, false, false]
