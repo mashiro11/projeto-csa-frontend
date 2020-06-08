@@ -33,13 +33,20 @@ const Csas = () => {
 
   const getData = (csasData) => {
     setState({
-      csas: csasData,
-      regions: csasData.reduce( (regionsList, csa ) => [...regionsList, csa.region], [])
+      csas:         csasData,
+      convRegions:  csasData.reduce( (regionsList, csa ) =>
+                        csa.meetingPoints.reduce( (rList, meetingPoint) => {
+                          if(!rList.includes(meetingPoint.region.name)) return [...rList, meetingPoint.region.name]
+                        }, regionsList)
+                    , []),
+      prodRegions:  csasData.reduce( (regionsList, csa ) => [...regionsList, csa.region.name], [])
     })
   }
 
   React.useEffect(() => request('get', 'csas', getData, handleError), [error])
-  const { csas, regions } = state
+  const { csas, convRegions, prodRegions } = state
+  console.log('convRegions:', convRegions)
+  console.log('prodRegions:', prodRegions)
   return (
     <div style={styles.contentContainer(layout)}>
 
@@ -93,20 +100,39 @@ const Csas = () => {
                 csas.map((csa, i) => <CsaListItem csa={csa} key={i}/> )
                 : <div>Buscando dados...</div>
             :viewType === 'conv' ?
-                <div>not yet</div>
+                convRegions ? convRegions.map((regionName, index) =>
+                  <ExpansionPanel key={index}>
+                    <ExpansionPanelSummary
+                      style={{backgroundColor: '#E0E0E0'}}
+                      expandIcon={<DownArrowIcon />}
+                    >
+                      {regionName}
+                    </ExpansionPanelSummary>
+
+
+                    <ExpansionPanelDetails>
+                      {csas.filter((csa, i) => csa.region.name === regionName)
+                           .map((csa, i) =>
+                          <CsaListItem key={i} csa={csa} />
+                      )}
+                    </ExpansionPanelDetails>
+
+
+                  </ExpansionPanel>
+                ) : <div>Buscando dados...</div>
             :viewType === 'prod' ?
-              regions ? regions.map((region, index) =>
+              prodRegions ? prodRegions.map((regionName, index) =>
                 <ExpansionPanel key={index}>
                   <ExpansionPanelSummary
                     style={{backgroundColor: '#E0E0E0'}}
                     expandIcon={<DownArrowIcon />}
                   >
-                    {region.name}
+                    {regionName}
                   </ExpansionPanelSummary>
 
 
                   <ExpansionPanelDetails>
-                    {csas.filter((csa, i) => csa.region.name === region.name)
+                    {csas.filter((csa, i) => csa.region.name === regionName)
                          .map((csa, i) =>
                         <CsaListItem key={i} csa={csa} />
                     )}

@@ -49,8 +49,6 @@ const Topics = () => {
     let temp = [...topics]
     let first = order === 0 ? -1 : 1
     let second = order === 0 ? 1 : -1
-    console.log('order:', order)
-    console.log('first:', first, 'second:', second)
     setTopics(temp.sort((a, b) => a.messages.length < b.messages.length? first : second ))
   }
 

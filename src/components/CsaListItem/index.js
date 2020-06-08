@@ -7,19 +7,31 @@ const CsaListItem = ({csa}) => {
     <div style={{width: '100%'}}>
       <div><Link to={`/csas/csa/${csa.id}`}>{csa.nome}</Link></div>
       <div>
-        <span>Ponto de convivência:</span>
-        {csa.meetingPoints.map( (meetingPoint, index) =>
-          <span key={index}>
-            {meetingPoint.place} {meetingPoint.weekday},
-            {meetingPoint.weekSchedule.map( (schedule, i) =>
-              <span key={i}>{schedule.startTime}-{schedule.endTime}</span>
-            )}
-          </span>
-        )}
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <div>Ponto de convivência:</div>
+          {csa.meetingPoints.map( (meetingPoint, index) =>
+            <div key={index} style={{display: 'flex', justifyContent: 'space-between'}}>
+              <div>
+                {meetingPoint.region.name}
+              </div>
+              {meetingPoint.weekSchedule.map( (schedule, i) =>
+                <div key={i}>{`${meetingPoint.weekday}, ${schedule.startTime}-${schedule.endTime}`}</div>
+              )}
+            </div>
+          )}
+        </div>
+        <hr/>
+
+        <div>
+          <div  style={{display: 'flex', justifyContent: 'space-between'}}>
+            <div>Local de produção:</div>
+            <div>{csa.region.name}</div>
+            <div></div>
+          </div>
+          <hr/>
+        </div>
+
       </div>
-      <hr/>
-      <div>Local de produção: {csa.region.name}</div>
-      <hr/>
     </div>
   )
 }
