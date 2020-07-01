@@ -19,6 +19,8 @@ import Topic from './Pages/Topic'
 import NewTopic from './Pages/NewTopic'
 import WhatIs from './Pages/WhatIs'
 import Login from './Pages/Login'
+import Register from './Pages/Register'
+import Profile from './Pages/Profile'
 
 import PrivateRoute from './components/PrivateRoute'
 
@@ -51,7 +53,7 @@ function App() {
     <UserContext.Provider value={user}>
     <LayoutContext.Provider value={layout}>
       <div className="App">
-        <Navbar />
+        <Navbar user={user}/>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/sobre" component={About} />
@@ -66,8 +68,15 @@ function App() {
           <PrivateRoute exact path="/conversas/nova" component={NewTopic} />
 
           <Route exact path="/o-que-e-csa" component={WhatIs} />
+
           <Route exact path="/login"
             render={(props) => <Login {...props} setUser={setUser} />}
+          />
+          <Route exact path="/cadastro"
+            render={(props) => <Register {...props} setUser={setUser} />}
+          />
+          <Route exact path="/meus_dados"
+            render={(props) => <Profile {...props} setUser={setUser} />}
           />
         </Switch>
       </div>

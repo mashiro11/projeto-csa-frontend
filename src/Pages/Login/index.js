@@ -35,13 +35,11 @@ const Login = ({setUser}) => {
       <div style={{margin: '0 auto', width: '30%', backgroundColor: '#efefef', padding: 30}}>
         Login:
         <div>
-          <span>Usuário:</span>
-          <input className='text' type='text' value={identifier}
+          <input placeholder='Usuario ou email' type='text' value={identifier}
             onChange={(e) => setIdentifier(e.target.value) }/>
         </div>
         <div>
-          <span>Senha:</span>
-          <input className='text' type='password' value={password}
+          <input placeholder='Senha' type='password' value={password}
           onChange={(e) => setPassword(e.target.value) }/>
         </div>
         <button onClick={loginRequest}>Entrar</button>

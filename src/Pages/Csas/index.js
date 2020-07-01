@@ -56,9 +56,9 @@ const Csas = () => {
         <div>
           {/*<Filters />*/}
           <div>Ordenar por:</div>
-          <RadioButton check={ viewType === 'csan'} onClick={()=> setViewType('csan')} label='NOME'/>
-          <RadioButton check={ viewType === 'conv'} onClick={()=> setViewType('conv')} label='CONV'/>
-          <RadioButton check={ viewType === 'prod'} onClick={()=> setViewType('prod')} label='PROD'/>
+          <RadioButton check={ viewType === 'csan'} onClick={()=> setViewType('csan')} label='nome das comunidades'/>
+          <RadioButton check={ viewType === 'conv'} onClick={()=> setViewType('conv')} label='região do Ponto de Convivência'/>
+          <RadioButton check={ viewType === 'prod'} onClick={()=> setViewType('prod')} label='região do local de produção'/>
           {viewType === 'conv' ?
             <div>
               <div>Dia do ponto de convivência:</div>

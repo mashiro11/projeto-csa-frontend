@@ -12,16 +12,16 @@ import MenuIcon from '../../icons/Menu'
 
 import styles from './styles.js'
 
-const Navbar = () => {
+const Navbar = ({user}) => {
   const layout = React.useContext(LayoutContext)
-  const user = React.useContext(UserContext)
+  //const user = React.useContext(UserContext)
   const [drawerState, setDrawerState] = React.useState(false)
 
   const links = () =>
     Object.values(applicationPages).map( (item, index) =>
       <Link style={layout === 'DESKTOP' ? styles.pageLink : null} to={item.link} key={index} >{item.text}</Link>
     )
-
+  React.useEffect(()=>{}, [user])
   return (
     <div>
       <div style={styles.container}>
@@ -55,7 +55,7 @@ const Navbar = () => {
           : null}
 
 {/*User button*/}
-          <Link to='/login'>
+          <Link to={user.username ? '/meus_dados' : '/cadastro'}>
             {user.username ?
               <img src='https://i.pravatar.cc/38' alt='user' className='avatar' />
               : <UserIcon />
