@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import UserContext from '../../UserContext'
 
 const Profile = ({props, setUser}) => {
@@ -25,8 +25,19 @@ const Profile = ({props, setUser}) => {
       <div>
         Entrou na plataforma dia: {signUpDateString}
       </div>
+      {user.csa ?
+        <div>
+        </div>
+        :
+        <div>
+          <div>Ainda não particia de uma CSA</div>
+          <Link to="/csas/nova">Criar uma CSA</Link>
+          <button>Participar de uma CSA existente</button>
+        </div>
+      }
       <button onClick={logout}>Logout</button>
       {!user.username ? <Redirect to='/' /> : null}
+      {}
      </div>
   )
 }

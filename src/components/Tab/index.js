@@ -6,7 +6,7 @@ const Tab = ({selected, onSelected, labels, children}) => {
     {/*Tab buttons*/}
       <div style={{display: 'flex', displayOrientation: 'horizontal'}}>
         {labels.map( (label, index) =>
-          <div onClick={onSelected}>{label}</div>
+          <div key={index} onClick={onSelected}>{label}</div>
         )}
       </div>
     </div>
