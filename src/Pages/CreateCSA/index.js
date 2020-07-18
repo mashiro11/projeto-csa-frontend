@@ -24,8 +24,6 @@ const CreateCSA = () => {
     request('post', 'csas', handleData, handleError, payload, true)
   }
 
-  console.log('newCSA: ', newCSA)
-
   return(
     <div>
       <div>Página para criar uma CSA</div>
@@ -39,5 +37,5 @@ const CreateCSA = () => {
     </div>
   )
 }
-/**/
+
 export default CreateCSA

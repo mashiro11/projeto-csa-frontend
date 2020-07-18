@@ -13,7 +13,7 @@ import MessageSender from '../../components/MessageSender'
 import styles from './styles.js'
 
 const Topic = (props) => {
-  const layout = React.useContext(LayoutContext)
+  //const layout = React.useContext(LayoutContext)
   const user = React.useContext(UserContext)
   const [topic, setTopic] = React.useState({})
   const [reply, setReply] = React.useState(false)

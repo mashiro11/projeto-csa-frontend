@@ -27,10 +27,13 @@ const Profile = ({props, setUser}) => {
       </div>
       {user.csa ?
         <div>
+          <Link to={`/csas/csa/${user.csa}`}>
+            Minha CSA
+          </Link>
         </div>
         :
         <div>
-          <div>Ainda não particia de uma CSA</div>
+          <div>Ainda não participa de uma CSA</div>
           <Link to="/csas/nova">Criar uma CSA</Link>
           <button>Participar de uma CSA existente</button>
         </div>

@@ -1,16 +1,15 @@
 import React from 'react'
 
-import UserContext from '../../UserContext'
+//import UserContext from '../../UserContext'
 import request from '../../request.js'
 
 import ErrorHandler from '../../components/ErrorHandler'
 import Tab from '../../components/Tab'
 
 const Csa = (props) => {
-  const user = React.useContext(UserContext)
+  //const user = React.useContext(UserContext)
   const [csa, setCsa] = React.useState({})
   const [error, setError] = React.useState({})
-
   const [tabValue, setTabValue] = React.useState(0)
 
   const retry = () => setError({})
@@ -134,8 +133,6 @@ const Csa = (props) => {
           </div>
           :
           <div>Buscando informações da CSA...</div>
-        }
-
       }
     </div>
   )

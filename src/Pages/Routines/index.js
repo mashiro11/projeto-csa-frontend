@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import ErrorHandler, { errorHandler } from '../../components/ErrorHandler'
+import ErrorHandler from '../../components/ErrorHandler'
 import Banner from '../../components/Banner'
 import bannerImg from './praticas.jpg'
 

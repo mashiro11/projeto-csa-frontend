@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
@@ -13,7 +13,7 @@ import LayoutContext from '../../LayoutContext'
 import request from '../../request.js'
 
 import ErrorHandler from '../../components/ErrorHandler'
-import Filters from '../../components/Filters'
+//import Filters from '../../components/Filters'
 import CsaListItem from '../../components/CsaListItem'
 import styles from './styles.js'
 import './index.css'
@@ -34,11 +34,16 @@ const Csas = () => {
   const getData = (csasData) => {
     setState({
       csas:         csasData,
-      convRegions:  csasData.reduce( (regionsList, csa ) =>
-                        csa.meetingPoints.reduce( (rList, meetingPoint) => {
-                          if(!rList.includes(meetingPoint.region.name)) return [...rList, meetingPoint.region.name]
-                        }, regionsList)
-                    , []),
+      convRegions:  csasData.reduce(
+                        (regionsList, csa ) =>
+                          csa.meetingPoints.reduce(
+                              (rList, meetingPoint) =>
+                                !rList.includes(meetingPoint.region.name) ?
+                                  [...rList, meetingPoint.region.name] :
+                                  rList,
+                              regionsList
+                          ),
+                    []),
       prodRegions:  csasData.reduce( (regionsList, csa ) => [...regionsList, csa.region.name], [])
     })
   }
