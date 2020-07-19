@@ -5,6 +5,7 @@ import UserContext from '../../UserContext'
 const Profile = ({props, setUser}) => {
   const week = ['Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado']
   const user = React.useContext(UserContext)
+
   const logout = () => {
     document.cookie = 'jwt=;'
     setUser({})
@@ -27,8 +28,9 @@ const Profile = ({props, setUser}) => {
       </div>
       {user.csa ?
         <div>
-          <Link to={`/csas/csa/${user.csa}`}>
-            Minha CSA
+          Minha CSA:
+          <Link to={`/csas/csa/${user.csa.id}`}>
+            {user.csa.nome}
           </Link>
         </div>
         :
