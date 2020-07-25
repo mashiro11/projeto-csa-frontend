@@ -6,21 +6,27 @@ import UserContext from '../../UserContext'
 
 import RadioButton from '../../components/RadioButton'
 import Checkbox from '../../components/Checkbox'
+import InputTextList from '../../components/InputTextList'
+
 
 const CreateCSA = () => {
 
-  const [csaName, setCSAName] = React.useState('')
-  const [csaDescription, setCSADescription] = React.useState('')
-  const [newCSA, setNewCSA] = React.useState({})
-  const [trabalhadores, setTrabalhadores] = React.useState('')
+  const [newCSA, setNewCSA] = React.useState({
+    name: '',
+    description: '',
+    agricultores: [''],
+    trabalhadores: [''],
+    df: true,
+  })
+
   const user = React.useContext(UserContext)
 
   const handleData = (csa) =>  setNewCSA(csa)
   const handleError = (error) => console.log('error:', error)
 
   const payload = {
-    nome: csaName,
-    descricao: csaDescription,
+    nome: newCSA.name,
+    descricao: newCSA.description,
     users: [user.id]
   }
 
@@ -34,33 +40,53 @@ const CreateCSA = () => {
       <div>Sobre a CSA</div>
       <div>
         <div>Nome:</div>
-        CSA <input type='text' placeholder='Nome da CSA' onChange={(e) => setCSAName(e.target.value) } value={csaName}/><br/>
+        <div>
+          CSA
+          <input type='text' placeholder='Nome da CSA'
+          onChange={(e) => setNewCSA({...newCSA, name: e.target.value}) }
+          value={newCSA.name}/>
+        </div>
       </div>
-      <input type='textarea' placeholder='Descrição' onChange={(e) => setCSADescription(e.target.value)} value={csaDescription}/><br/>
+      <input type='textarea' placeholder='Descrição' onChange={(e) => setNewCSA({...newCSA, description: e.target.value})} value={newCSA.description}/><br/>
       <div>
         Agricultor
       </div>
-      <input type='text'
-        placeholder='Digite o nome do(a) agricultor(a)'
-        onChange={(e) => setTrabalhadores(e.target.value)}
-        value={trabalhadores}
-      /><br/>
-      <button>Acrescentar outro(a) trabalhador(a)</button>
+      <InputTextList
+        listValues={newCSA.agricultores}
+        addButton={'Acrescentar outro(a) agricultor(a)'}
+        removeButton={'Remover'}
+        onChange={(e, index) => {
+          let ag = newCSA.agricultores.slice(0)
+          ag[index] = e.target.value
+          setNewCSA({...newCSA, agricultores: ag})
+        }}
+        onAdd={ () => setNewCSA({...newCSA, agricultores: [...newCSA.agricultores, '']})}
+        onRemove={(index) => setNewCSA({...newCSA, agricultores: [...newCSA.agricultores.slice(0, index), ...newCSA.agricultores.slice(index+1)]})}
+      />
 
       <div>
         Trabalhadores rurais
       </div>
-      <input type='text'
-        placeholder='Digite o nome do(a) trabalhador(a) rural'
-        onChange={(e) => setTrabalhadores(e.target.value)}
-        value={trabalhadores}
-      /><br/>
-      <button>Acrescentar outro(a) trabalhador(a)</button>
+      <InputTextList
+        listValues={newCSA.trabalhadores}
+        addButton={'Acrescentar outro(a) trabalhador(a)'}
+        removeButton={'Remover'}
+        onChange={(e, index) => {
+          let tr = newCSA.trabalhadores.slice(0)
+          tr[index] = e.target.value
+          setNewCSA({...newCSA, trabalhadores: tr})
+        }}
+        onAdd={ () => setNewCSA({...newCSA, trabalhadores: [...newCSA.trabalhadores, '']})}
+        onRemove={(index) => setNewCSA({...newCSA, agricultores: [...newCSA.trabalhadores.slice(0, index), ...newCSA.trabalhadores.slice(index+1)]})}
+      />
       <br/>
 
       <div>Local de produção</div>
-      <RadioButton label={'No DF'}/>
-      <RadioButton label={'Fora do DF'}/>
+      <RadioButton label={'No DF'}
+        check={newCSA.df} onClick={()=>setNewCSA({...newCSA, df: true})} />
+      <RadioButton label={'Fora do DF'}
+        check={!newCSA.df} onClick={()=>setNewCSA({...newCSA, df: false})} />
+
       <div>
         Selecione uma região
       </div>
