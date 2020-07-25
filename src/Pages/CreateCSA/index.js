@@ -7,16 +7,17 @@ import UserContext from '../../UserContext'
 import RadioButton from '../../components/RadioButton'
 import Checkbox from '../../components/Checkbox'
 import InputTextList from '../../components/InputTextList'
-
+import Dropdown from '../../components/Dropdown'
 
 const CreateCSA = () => {
-
+  const [defaultData, setDefaultData] = React.useState([])
   const [newCSA, setNewCSA] = React.useState({
     name: '',
     description: '',
     agricultores: [''],
     trabalhadores: [''],
     df: true,
+    cotas: true
   })
 
   const user = React.useContext(UserContext)
@@ -33,6 +34,8 @@ const CreateCSA = () => {
   const createCSA = () => {
     request('post', 'csas', handleData, handleError, payload, true)
   }
+
+  React.useEffect(()=>request('get', 'production-types', setDefaultData, handleError), [])
 
   return(
     <div>
@@ -87,25 +90,26 @@ const CreateCSA = () => {
       <RadioButton label={'Fora do DF'}
         check={!newCSA.df} onClick={()=>setNewCSA({...newCSA, df: false})} />
 
-      <div>
-        Selecione uma região
-      </div>
-      <button>Acrescentar outro local de produção</button><br/>
+
+      <Dropdown placeholder={'Selecione uma região'} values={['Oi', 'batata', 'bola']}/>
+      <button>Acrescentar outro local de produção</button>
+      <br/>
+      <br/>
 
       <div>
         <div>Tipos de produção</div>
-        <Checkbox label='Agroecologica'/>
-        <Checkbox label='Agroflorestal'/>
-        <Checkbox label='Biodinâmica'/>
-        <Checkbox label='Orgânica'/>
+        {defaultData.map((item, index) =>
+            <Checkbox label={item.name} key={index}/>
+          )
+        }
         <Checkbox label='Outra'/>
         <input type='text' />
       </div>
 
       <div>
         <div>Há cotas disponíveis?</div>
-        <RadioButton label='Sim'/>
-        <RadioButton label='Não'/>
+        <RadioButton label='Sim' check={newCSA.cotas} onClick={()=>setNewCSA({...newCSA, cotas: true})}/>
+        <RadioButton label='Não' check={!newCSA.cotas} onClick={()=>setNewCSA({...newCSA, cotas: false})}/>
       </div>
       <button>Cancelar</button>
       <button>Avançar</button>
