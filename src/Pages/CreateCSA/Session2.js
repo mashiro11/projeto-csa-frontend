@@ -68,14 +68,13 @@ const Session2 = ({newCSA, setNewCSA, defaultValues}) => {
                       }}>Remover horário
                     </button>
                   : null}
-
-                  <button onClick={()=>{
-                    let mp = newCSA.meetingPoints.slice(0)
-                    mp[index].schedule = [...mp[index].schedule, Object.create(mp[index].schedule[mp[index].schedule.length-1])]
-                    setNewCSA({...newCSA, meetingPoints: mp})
-                  }}>Adicionar horário</button>
                 </div>
                 )}
+                <button onClick={()=>{
+                  let mp = newCSA.meetingPoints.slice(0)
+                  mp[index].schedule = [...mp[index].schedule, Object.create(mp[index].schedule[mp[index].schedule.length-1])]
+                  setNewCSA({...newCSA, meetingPoints: mp})
+                }}>Adicionar horário</button>
               </div>
           </div>
 
