@@ -33,6 +33,18 @@ const CreateCSA = () => {
         hour: '',
         minutes: ''
       }]
+    }],
+    creationYear: '',
+    creationMonth: '',
+    description: '',
+    images:[{
+      file: '',
+      description: ''
+    }],
+    videos:[''],
+    faq: [{
+      question: '',
+      answer: ''
     }]
   })
 
