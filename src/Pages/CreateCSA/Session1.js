@@ -68,10 +68,20 @@ const Session1 = ({newCSA, setNewCSA, defaultData}) => {
       <div>
         <div>Tipos de produção</div>
         {defaultData.map((item, index) =>
-            <Checkbox label={item.name} key={index}/>
+            <Checkbox label={item.name} key={index} onCheck={(check) => {
+                if(check) setNewCSA({...newCSA, productionTypes:[...newCSA.productionTypes, item.id] })
+                else setNewCSA(
+                  {...newCSA,
+                  productionTypes:[...newCSA.productionTypes.slice(0, newCSA.productionTypes.indexOf(item.id)),
+                                   ...newCSA.productionTypes.slice(newCSA.productionTypes.indexOf(item.id) + 1)]
+                  })
+            }}/>
         )}
         <Checkbox label='Outra'/>
-        <input type='text' />
+        <input type='text'
+          onChange={(e)=>setNewCSA({...newCSA, newProductionType: e.target.value})}
+          value={newCSA.newProductionType}
+        />
       </div>
 
       <div>

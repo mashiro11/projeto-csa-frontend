@@ -21,6 +21,8 @@ const CreateCSA = () => {
     agricultores: [''],
     trabalhadores: [''],
     df: true,
+    productionTypes: [],
+    newProductionType: '',
     cotas: true
   })
 
