@@ -17,10 +17,10 @@ const CreateCSA = () => {
   const [defaultData, setDefaultData] = React.useState([])
   const [newCSA, setNewCSA] = React.useState({
     name: '',
-    description: '',
     agricultores: [''],
     trabalhadores: [''],
     df: true,
+    regions: [''],
     productionTypes: [],
     newProductionType: '',
     cotas: true

@@ -17,9 +17,10 @@ const Dropdown = ({values, onClick, placeholder}) => {
         withResetValues.map((value, index) =>
           <div key={index}>
             <button
+              value={value}
               onClick={onClick ? (e) => {
                 setState({open: false, selected: index-1})
-                onClick(e, index-1)
+                onClick(value, index-1)
               }:
               (e) => setState({open: false, selected: index-1})
               }>
