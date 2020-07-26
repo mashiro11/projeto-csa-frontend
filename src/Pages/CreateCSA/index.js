@@ -23,7 +23,17 @@ const CreateCSA = () => {
     regions: [''],
     productionTypes: [],
     newProductionType: '',
-    cotas: true
+    cotas: true,
+    meetingPoints:[{
+      region:'',
+      address: '',
+      reference: '',
+      schedule:[{
+        day: '',
+        hour: '',
+        minutes: ''
+      }]
+    }]
   })
 
   const user = React.useContext(UserContext)

@@ -1,10 +1,9 @@
 import React from 'react'
 
-const Dropdown = ({values, onClick, placeholder}) => {
-  const [state, setState] = React.useState({selected: -1, open: false})
+const Dropdown = ({values, currentValue, onClick, placeholder}) => {
+  const [state, setState] = React.useState({selected: (currentValue ? values.indexOf(currentValue) : -1), open: false})
 
-  const withResetValues = [placeholder ? placeholder: 'Reset', ...values]
-
+  const withResetValues = [placeholder ? placeholder: 'Reset', ...(values ? values : [])]
   return(
     <div>
       <button onClick={() => setState({...state, open: !state.open})}>
