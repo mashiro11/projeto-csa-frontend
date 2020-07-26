@@ -37,6 +37,12 @@ const CreateCSA = () => {
     creationYear: '',
     creationMonth: '',
     description: '',
+    email: '',
+    phone: '',
+    talkTo: '',
+    websites:[''],
+    facebook: '',
+    instagram: '',
     images:[{
       file: '',
       description: ''
