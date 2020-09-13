@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StepSession = ({children, onComplete, onCancel, nextButton, previousButton, firstPreviousButton, lastNextButton}) => {
+const StepSession = ({children, onComplete, onNext, onPrevious, onCancel, nextButton, previousButton, firstPreviousButton, lastNextButton}) => {
   const [step, setStep] = React.useState(0)
 
   const progress = (step) => {
@@ -14,8 +14,18 @@ const StepSession = ({children, onComplete, onCancel, nextButton, previousButton
         <div>
             {children[step]}
             <div>Parte {step+1} de {children.length} </div>
-            <button onClick={()=>progress(step-1)}>{step === 0? firstPreviousButton : previousButton}</button>
-            <button onClick={()=>progress(step+1)}>{step === children.length-1? lastNextButton : nextButton }</button>
+            <button onClick={()=>{
+                if(onPrevious) onPrevious()
+                progress(step-1)
+              }}>
+                {step === 0? firstPreviousButton : previousButton}
+            </button>
+            <button onClick={()=>{
+                if(onNext) onNext(step)
+                progress(step+1)
+              }}>
+              {step === children.length-1? lastNextButton : nextButton }
+            </button>
         </div>
       :null}
 

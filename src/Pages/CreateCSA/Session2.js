@@ -2,14 +2,20 @@ import React from 'react'
 import RadioButton from '../../components/RadioButton'
 import Dropdown from '../../components/Dropdown'
 
-const Session2 = ({newCSA, setNewCSA, defaultValues}) => {
+const Session2 = ({newCSA, setNewCSA, defaultData}) => {
   return(
     <div>
       <div>Ponto de Convivência</div>
       {newCSA.meetingPoints.map((item, index)=>
         <div key={index}>
           <div>
-            <Dropdown placeholder='Região' values={['R1', 'R2', 'R3']}/>
+            <Dropdown placeholder='Região' placeholder={'Selecione uma região'}
+            values={defaultData.regions ? defaultData.regions.map((region) => region.name ) : []}
+            onClick={(name) => {
+              let mp = newCSA.meetingPoints.slice(0)
+              mp[index].region = defaultData.regions.find((region) => region.name === name).id
+              setNewCSA({...newCSA, meetingPoints: mp})
+            }}/>
           </div>
           <div>
             <div>Endereço</div>
@@ -23,7 +29,7 @@ const Session2 = ({newCSA, setNewCSA, defaultValues}) => {
           <div>
             <div>Local de referência</div>
             <input type='text' placeholder='Digite o endereço'
-              value={newCSA.reference} onChange={(e) => setNewCSA({...newCSA, reference: e.target.value})}/>
+              value={newCSA.meetingPoints.reference} onChange={(e) => setNewCSA({...newCSA, reference: e.target.value})}/>
           </div>
 
           <div>

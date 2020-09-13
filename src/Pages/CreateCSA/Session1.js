@@ -31,7 +31,7 @@ const Session1 = ({newCSA, setNewCSA, defaultData}) => {
             placeholder='Digite o nome do(a) agricultor(a)'
             onChange={(e) => {
               let ag = newCSA.agricultores.slice(0)
-              ag[index] = e.target.value
+              ag[index] = {name: e.target.value}
               setNewCSA({...newCSA, agricultores: ag})
             }}
           />
@@ -62,7 +62,7 @@ const Session1 = ({newCSA, setNewCSA, defaultData}) => {
               placeholder='Digite o nome do(a) trabalhador(a)'
               onChange={(e) => {
                 let ag = newCSA.trabalhadores.slice(0)
-                ag[index] = e.target.value
+                ag[index] = {name: e.target.value}
                 setNewCSA({...newCSA, trabalhadores: ag})
               }}
             />
@@ -90,13 +90,13 @@ const Session1 = ({newCSA, setNewCSA, defaultData}) => {
         <RadioButton label={'Fora do DF'}
           check={!newCSA.df} onClick={()=>setNewCSA({...newCSA, df: false})} />
 
-        {newCSA.regions.map((item, index)=>
+        {newCSA.regions.map((item, index) =>
           <Dropdown key={index}
             placeholder={'Selecione uma região'}
-            values={['Oi', 'batata', 'bola']}
+            values={defaultData.regions ? defaultData.regions.map((region) => region.name ) : []}
             onClick={(name) => {
               let reg = newCSA.regions
-              reg[index] = name
+              reg[index] = defaultData.regions.find((region) => region.name === name).id
               setNewCSA({...newCSA, regions: reg})
             }}/>
         )}
@@ -107,7 +107,8 @@ const Session1 = ({newCSA, setNewCSA, defaultData}) => {
 
       <div>
         <div>Tipos de produção</div>
-        {defaultData.map((item, index) =>
+        {defaultData['production-types'] ?
+          defaultData['production-types'].map((item, index) =>
             <Checkbox label={item.name} key={index} onCheck={(check) => {
                 if(check) setNewCSA({...newCSA, productionTypes:[...newCSA.productionTypes, item.id] })
                 else setNewCSA(
@@ -116,8 +117,8 @@ const Session1 = ({newCSA, setNewCSA, defaultData}) => {
                                    ...newCSA.productionTypes.slice(newCSA.productionTypes.indexOf(item.id) + 1)]
                   })
             }}/>
-        )}
-        
+        ): null}
+
         <div>
           Outra:
           <input type='text'
