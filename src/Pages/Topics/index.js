@@ -10,7 +10,7 @@ import Banner from '../../components/Banner'
 import Filters from '../../components/Filters'
 import TopicListItem from '../../components/TopicListItem'
 
-import bannerImg from './banner.jpg'
+import bannerImg from '../../banner.jpg'
 import styles from './styles.js'
 
 
