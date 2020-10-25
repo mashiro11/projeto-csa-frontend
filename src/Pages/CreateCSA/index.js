@@ -35,12 +35,12 @@ const CreateCSA = () => {
       id: createdCSA.id,
       meetingPoints:[{
         region:'',
-        address: '',
+        place: '',
         reference: '',
-        schedule:[{
-          day: '',
-          hour: '',
-          minutes: ''
+        weekday: '',
+        weekSchedule:[{
+          startTime: '',
+          endTime: ''
         }]
       }]
     },
@@ -74,7 +74,11 @@ const CreateCSA = () => {
         answer: ''
       }]
     }
-])
+  ])
+
+  const setState = (index) => (newValue) => {
+    setNewCSA([...newCSA.slice(0, index), newValue, ...newCSA.slice(index+1)])
+  }
 
   const handleError = (error) => console.log('error:', error)
 
@@ -86,19 +90,29 @@ const CreateCSA = () => {
 
   const onPrevious = () => {}
 
+  React.useEffect(()=>{
+    setNewCSA([{...newCSA[0], users:[user.id]}, ...newCSA.slice(1)])
+  }, [user])
+
   React.useEffect(() => {
-    /*
-        Should correct this! A single request should get all data
-    */
-    //if(!requested){
-      //setRequested(true)
     if(defaultData['production-types'].length === 0)
       request('get', 'production-types', (data) => setDefaultData({...defaultData, 'production-types': data}), handleError)
+  }, [defaultData])
+
+  React.useEffect(()=>{
     if(defaultData.regions.length === 0)
       request('get', 'regions', (data) => setDefaultData({...defaultData, 'regions': data}), handleError)
-    //}
-    setNewCSA({...newCSA, 0:{...newCSA[0], users:[user.id]} })
-  }, [defaultData, user])
+  }, [defaultData])
+
+  React.useEffect(() => {
+    if(createdCSA.id){
+      let temp = Object.values(newCSA).slice(0)
+      temp.map((blockInfo) => blockInfo.id = createdCSA.id)
+      setNewCSA(temp)
+    }
+  }, [createdCSA])
+
+  console.log('render')
 
   return(
     <div>
@@ -111,12 +125,12 @@ const CreateCSA = () => {
         onCancel={onCancel}
         onNext={(session) => session === 0 ? createCSA() : updateCSA(session)}
         onPrevious={onPrevious}>
-        <Session1 newCSA={newCSA[0]} setNewCSA={(newData) => setNewCSA({...newCSA, 0: newData})} defaultData={defaultData}/>
-        <Session2 newCSA={newCSA[1]} setNewCSA={(newData) => setNewCSA({...newCSA, 1: newData})} defaultData={defaultData}/>
-        <Session3 newCSA={newCSA[2]} setNewCSA={(newData) => setNewCSA({...newCSA, 2: newData})} defaultData={defaultData}/>
-        <Session4 newCSA={newCSA[3]} setNewCSA={(newData) => setNewCSA({...newCSA, 3: newData})} defaultData={defaultData}/>
-        <Session5 newCSA={newCSA[4]} setNewCSA={(newData) => setNewCSA({...newCSA, 4: newData})} defaultData={defaultData}/>
-        <Session6 newCSA={newCSA[5]} setNewCSA={(newData) => setNewCSA({...newCSA, 5: newData})} defaultData={defaultData}/>
+        <Session1 newCSA={newCSA[0]} setNewCSA={setState(0)} defaultData={defaultData}/>
+        <Session2 newCSA={newCSA[1]} setNewCSA={setState(1)} defaultData={defaultData}/>
+        <Session3 newCSA={newCSA[2]} setNewCSA={setState(2)} defaultData={defaultData}/>
+        <Session4 newCSA={newCSA[3]} setNewCSA={setState(3)} defaultData={defaultData}/>
+        <Session5 newCSA={newCSA[4]} setNewCSA={setState(4)} defaultData={defaultData}/>
+        <Session6 newCSA={newCSA[5]} setNewCSA={setState(5)} defaultData={defaultData}/>
       </StepSession>
       {/* newCSA.id ?
         <Redirect to={`/csas/csa/${newCSA.id}`} />

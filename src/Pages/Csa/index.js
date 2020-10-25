@@ -29,7 +29,6 @@ const Csa = (props) => {
 
   React.useEffect(() => request('get', `csas/${props.match.params.id}`, setCsa, handleError), [error])
 
-  console.log('user: ', user)
   return(
     <div>
       {error.isAxiosError ?

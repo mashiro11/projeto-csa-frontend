@@ -1,6 +1,7 @@
 import React from 'react'
 
-const Perfil = (csa) => {
+const Perfil = ({csa}) => {
+  console.log('csa:', csa)
   return(
   <div>
     <div>
@@ -17,7 +18,7 @@ const Perfil = (csa) => {
         Trabalhadores rurais:
       </div>
       <div>
-        {csa.workers?.map((worker, index) =>
+        {csa.trabalhadores?.map((worker, index) =>
           <div key={index}>{worker.name}</div>
         )}
       </div>
@@ -43,18 +44,14 @@ const Perfil = (csa) => {
       <div>
         Cotas disponíveis:
       </div>
-      {csa.vacancy?
-        <div>Sim</div>
-        :
-        <div>Não</div>
-      }
+      {csa.vacancy? <div>Sim</div> : <div>Não</div> }
     </div>
 
     <div>
       <div className='orange'>PONTO DE CONVIVÊNCIA</div>
       <div>
         {csa.meetingPoints?.map( (meetingPoint, index) =>
-          <div key={index}>{meetingPoint.location}</div>
+          <div key={index}>{meetingPoint.region.name}</div>
         )}
       </div>
     </div>
