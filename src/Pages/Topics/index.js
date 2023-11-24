@@ -13,6 +13,8 @@ import TopicListItem from '../../components/TopicListItem'
 import bannerImg from '../../banner.jpg'
 import styles from './styles.js'
 
+import { createPopulateStringFromArray } from 'utils.js'
+
 
 const Topics = () => {
   const layout = React.useContext(LayoutContext)
@@ -21,6 +23,8 @@ const Topics = () => {
   const [routines, setRoutines] = React.useState([])
   const [filters, setFilters] = React.useState([])
   const [error, setError] = React.useState({})
+  const topicsPopulate = ["routines","creator","messages"]
+  const routineCategoriesPopulate = ["routines"]
 
   const handleError = (err) => {
     if(!error.isAxiosError) setError(err)
@@ -37,8 +41,8 @@ const Topics = () => {
   }
 
   const loadPage = () => {
-    request('get', 'topics', getTopics, handleError)
-    request('get', 'routine-categories', setRoutines, handleError)
+    request('get', 'topics', getTopics, handleError, null, false, createPopulateStringFromArray(topicsPopulate))
+    request('get', 'routine-categories', setRoutines, handleError, null, false, createPopulateStringFromArray(routineCategoriesPopulate))
   }
 
   const filterOption = (filter) => (set) => {
@@ -123,7 +127,7 @@ const Topics = () => {
               :
               topics
                 .filter( topic =>
-                  topic.routines?.some( routine => filters.length > 0 ? filters.includes(routine.name) : true )
+                  topic.routines?.some( routine => filters.length > 0 ? filters.includes(routine.Name) : true )
                 ).map( (item, index) =>
                   <TopicListItem topic={item} key={index}/>
                 )

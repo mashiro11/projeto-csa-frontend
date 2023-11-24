@@ -10,7 +10,7 @@ const Perfil = ({csa}) => {
       </div>
       <div>
         {csa.agricultores?.map((agricultor, index) =>
-          <div key={index}>{agricultor.name}</div>
+          <div key={index}>{agricultor.Name}</div>
         )}
       </div>
 
@@ -18,8 +18,8 @@ const Perfil = ({csa}) => {
         Trabalhadores rurais:
       </div>
       <div>
-        {csa.trabalhadores?.map((worker, index) =>
-          <div key={index}>{worker.name}</div>
+        {csa.workers?.map((worker, index) =>
+          <div key={index}>{worker.Name}</div>
         )}
       </div>
 
@@ -27,17 +27,18 @@ const Perfil = ({csa}) => {
         Local de produção:
       </div>
       <div>
-        {csa.workers?.map((worker, index) =>
-          <div key={index}>{worker.name}</div>
-        )}
+        {csa.region?
+          <div>{csa.region.Name}</div>
+          : null
+        }
       </div>
 
       <div>
         Tipo de produção:
       </div>
       <div>
-        {csa.productionTypes?.map((productionType, index) =>
-          <div key={index}>{productionType.name}</div>
+        {csa.production_types?.map((productionType, index) =>
+          <div key={index}>{productionType.Name}</div>
         )}
       </div>
 
@@ -50,8 +51,8 @@ const Perfil = ({csa}) => {
     <div>
       <div className='orange'>PONTO DE CONVIVÊNCIA</div>
       <div>
-        {csa.meetingPoints?.map( (meetingPoint, index) =>
-          <div key={index}>{meetingPoint.region.name}</div>
+        {csa.meeting_points?.map( (meetingPoint, index) =>
+          <div key={index}>{meetingPoint.region?.name}:{meetingPoint.Name}</div>
         )}
       </div>
     </div>
@@ -59,7 +60,7 @@ const Perfil = ({csa}) => {
     <div>
       <div className='orange'>NOSSO MODO DE SER</div>
       <div>
-        <div>Comunidade formada dia PPPPPPPPP</div>
+        <div>Comunidade formada dia {csa.formationDate? `${csa.formationDate.split("-")[2]}/${csa.formationDate.split("-")[1]}/${csa.formationDate.split("-")[0]}` : null}</div>
         <div>{csa.description}</div>
       </div>
     </div>

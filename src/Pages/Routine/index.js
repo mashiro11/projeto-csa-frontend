@@ -25,7 +25,7 @@ const Routine = (props) => {
         :
         routine?
           <div>
-            {routine.name}
+            {routine.Name}
             {user.id ? <Link to={{pathname:`/conversas/nova`, state: routine}} className='button small'>Adicionar conversa relacionada</Link>
             : null}
           </div>

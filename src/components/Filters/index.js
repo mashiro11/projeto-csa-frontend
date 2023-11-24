@@ -6,7 +6,7 @@ import LayoutContext from '../../LayoutContext.js'
 import Drawer from '../Drawer'
 import Searchbox from '../Searchbox'
 import Checkbox from '../Checkbox'
-import Button from 'components/Button'
+import Button from '../Button'
 const Filters = ({filterOptions, onSelect, sortFunctions}) => {
 
   const layout = React.useContext(LayoutContext)
@@ -51,7 +51,7 @@ const Filters = ({filterOptions, onSelect, sortFunctions}) => {
             {filterOptions?.map( (routineCategory, index) =>
               <Drawer key={index} labelType='button' label={routineCategory.name} initialState='open'>
               {routineCategory.routines
-                ?.filter( routine => routine.name.toLowerCase().includes(searchValue.toLowerCase()))
+                ?.filter( routine => routine.Name.toLowerCase().includes(searchValue.toLowerCase()))
                 .map((routine, index)=>
                 <div key={index}>
                   <Checkbox label={routine.name} onCheck={onSelect(routine.name)}/>

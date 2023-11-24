@@ -18,13 +18,47 @@ import CsaListItem from '../../components/CsaListItem'
 import styles from './styles.js'
 import './index.css'
 
+import { createPopulateStringFromArray } from 'utils'
+
+const getConvRegionList = (csas) => csas.reduce((regionsList, csa ) =>
+  csa.meeting_points.reduce(
+      (rList, meetingPoint) =>  meetingPoint.region && !rList.includes(meetingPoint.region.Name) ?
+          [...rList, meetingPoint.region.Name] :
+          rList,
+      regionsList
+    ),
+  [])
+const getProdRegionList = (csas) => csas.reduce( (regionsList, csa ) => (csa.region? [...regionsList, csa.region.Name] : regionsList), [])
+
+const getProdTypes = (csas) => {
+  return csas.reduce((resultList, csa) => {
+    if(!csa.production_types) return resultList;
+    let l = []
+    csa.production_types.map((productionType) => {
+      if(!resultList.includes(productionType.Name))
+      l = [...l, productionType.Name]
+    })
+    return [...resultList, ...l]
+  }
+  ,[])
+}
+
 const Csas = () => {
   const layout = React.useContext(LayoutContext)
-  const [state, setState] = React.useState({})
+  const [state, setState] = React.useState({weekDay: new Array(7).fill(true)})
+  const [selectedProdTypes, setSelectedProdTypes] = React.useState([])
   const [error, setError] = React.useState({})
   const [viewType, setViewType] = React.useState('csan')
   const diasDaSemana = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
-
+  const populate = [
+    "meeting_points",
+    "meeting_points.region",
+    "region",
+    "meeting_points.csasWeektimeFrame",
+    "meeting_points.csasWeektimeFrame.weekSchedule",
+    "meeting_points.csasWeektimeFrame.csa",
+    "production_types"
+  ]
   const retry = () => setError({})
 
   const handleError = (err) => {
@@ -32,26 +66,53 @@ const Csas = () => {
   }
 
   const getData = (csasData) => {
+    console.log('csasData:', csasData)
+    const prodTypes = getProdTypes(csasData)
+    const selectedProdTypes = new Array(prodTypes.length).fill(true)
+
     setState({
+      ...state,
       csas:         csasData,
-      convRegions:  csasData.reduce(
-                        (regionsList, csa ) =>
-                          csa.meetingPoints.reduce(
-                              (rList, meetingPoint) =>
-                                !rList.includes(meetingPoint.region.name) ?
-                                  [...rList, meetingPoint.region.name] :
-                                  rList,
-                              regionsList
-                          ),
-                    []),
-      prodRegions:  csasData.reduce( (regionsList, csa ) => [...regionsList, csa.region.name], [])
+      convRegions:  getConvRegionList(csasData),
+      prodRegions:  getProdRegionList(csasData),
+      prodTypes: prodTypes,
+      selectedProdTypes
     })
   }
 
-  React.useEffect(() => request('get', 'csas', getData, handleError), [error])
-  const { csas, convRegions, prodRegions } = state
+  
+  
+  React.useEffect(() => request('get', 'csas', getData, handleError, null, null, createPopulateStringFromArray(populate) ), [error])
+  const { csas, convRegions, prodRegions, prodTypes } = state
+  console.log('csas', csas)
   console.log('convRegions:', convRegions)
   console.log('prodRegions:', prodRegions)
+  
+  const filterCSAs = ({meetingRegionName, weekDay, regionName, prodType}) => {
+    let filteredCsas = [...csas]
+    
+    if(meetingRegionName)
+      filteredCsas = filteredCsas.filter( csa => csa.meeting_points.find(mp => mp.region.Name === meetingRegionName));
+    
+    if(weekDay)
+      filteredCsas = filteredCsas.filter(csa => {
+        if(!csa.meeting_points)
+          return false
+
+        const meetingHour = csa.meeting_points.find( mp => mp.csasWeektimeFrame.find(weekDayTime => 
+          weekDayTime.csa.Name === csa.Name && weekDayTime.weekSchedule.find(weekTime => state.weekDay[diasDaSemana.indexOf(weekTime.weekday)] )));
+        return meetingHour;  
+      })
+    
+    if(regionName)
+      filteredCsas = filteredCsas.filter(csa => csa.region.Name === regionName)
+
+    if(prodType)
+      filteredCsas = filteredCsas.filter(csa => csa.production_types.find( pType => selectedProdTypes[ prodTypes.indexOf(pType.Name)] ))
+
+    return filteredCsas
+  }
+  
   return (
     <div style={styles.contentContainer(layout)}>
 
@@ -68,22 +129,14 @@ const Csas = () => {
             <div>
               <div>Dia do ponto de convivência:</div>
               {diasDaSemana.map((dia, index)=>
-                <Checkbox label={dia} key={index}/>
+                <Checkbox label={dia} key={index} checked={state.weekDay[index]} onCheck={(check) => setState({...state, weekDay: [...state.weekDay.slice(0, index), check, ...state.weekDay.slice(index + 1)] })}/>
               )}
             </div>
           : viewType === 'prod'?
             <div>
               <div>Tipo de produção:</div>
-              {csas.reduce((resultList, csa) => {
-                  let l = []
-                  csa.production_types.map((productionType) => {
-                    if(!resultList.includes(productionType.name))
-                    l = [...l, productionType.name]
-                  })
-                  return [...resultList, ...l]
-                }
-                ,[]).map( (productionTypeName, index) =>
-                  <Checkbox key={index} label={productionTypeName} />
+              {prodTypes.map( (productionTypeName, index) =>
+                  <Checkbox key={index} label={productionTypeName} checked={selectedProdTypes[index]} onCheck={check => setSelectedProdTypes([...selectedProdTypes.slice(0, index), check, ...selectedProdTypes.slice(index + 1)])} />
                 )
               }
             </div>
@@ -116,8 +169,7 @@ const Csas = () => {
 
 
                     <ExpansionPanelDetails>
-                      {csas.filter((csa, i) => csa.region.name === regionName)
-                           .map((csa, i) =>
+                      {filterCSAs({meetingRegionName: regionName, weekDay: true}).map((csa, i) =>
                           <CsaListItem key={i} csa={csa} />
                       )}
                     </ExpansionPanelDetails>
@@ -137,7 +189,7 @@ const Csas = () => {
 
 
                   <ExpansionPanelDetails>
-                    {csas.filter((csa, i) => csa.region.name === regionName)
+                    {filterCSAs({regionName: regionName, prodType: true})
                          .map((csa, i) =>
                         <CsaListItem key={i} csa={csa} />
                     )}

@@ -6,7 +6,10 @@ import Banner from '../../components/Banner'
 import bannerImg from './praticas.jpg'
 
 import request from '../../request.js'
+import { createPopulateStringFromArray } from 'utils'
+
 const Routines = () => {
+  const populate = ["routines"]
   const [categories, setCategories] = React.useState([])
   const [error, setError] = React.useState({})
 
@@ -16,7 +19,7 @@ const Routines = () => {
 
   const retry = () => setError({})
 
-  React.useEffect(() => request('get', 'routine-categories', setCategories, handleError), [error])
+  React.useEffect(() => request('get', 'routine-categories', setCategories, handleError, null, false, createPopulateStringFromArray(populate) ), [error])
 
   return (
     <div>
@@ -33,10 +36,10 @@ const Routines = () => {
               :
               categories.map( (category, index) =>
                 <div key={index}>
-                  <div style={{backgroundColor: '#E0E0E0'}}>{category.name}</div>
+                  <div style={{backgroundColor: '#E0E0E0'}}>{category.Name}</div>
                   {category.routines.map(( routine, i )=>
                     <div key={i}>
-                      <Link to={`rotinas/rotina/${routine.id}`} >{routine.name}</Link>
+                      <Link to={`rotinas/rotina/${routine.id}`} >{routine.Name}</Link>
                       <hr/>
                     </div>
                   )}

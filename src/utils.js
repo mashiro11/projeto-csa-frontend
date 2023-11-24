@@ -12,4 +12,14 @@ const formatDate = (dateStringFormat, showHour) => {
   return date
 }
 
-export { formatDate }
+const createPopulateStringFromArray = (populateArray) => {
+  let populateString="?";
+  for(let i = 0; i < populateArray.length; i++){
+    populateString += `populate[${i}]=${populateArray[i]}`
+    if(i < populateArray.length - 1)
+      populateString += "&" 
+  }
+  return populateString
+}
+
+export { formatDate, createPopulateStringFromArray }

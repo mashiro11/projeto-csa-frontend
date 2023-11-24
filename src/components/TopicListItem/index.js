@@ -28,7 +28,7 @@ const TopicListItem = ({topic}) => {
     <div>
       <div className='onExtremes' style={styles.container}>
         <Link to={`conversas/conversa/${topic.id}`}
-          style={styles.link}>{topic.name}</Link>
+          style={styles.link}>{topic.Name}</Link>
         {topic.messages[0]?
           <div style={styles.latestUpdate}>
             <div style={styles.responses}>{topic.messages.length}</div>

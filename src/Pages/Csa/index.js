@@ -12,12 +12,22 @@ import UserContext from '../../UserContext'
 
 import Perfil from './Perfil'
 import Gestao from './Gestao'
+import { createPopulateStringFromArray } from 'utils.js'
 
 const Csa = (props) => {
   const user = React.useContext(UserContext)
   const [csa, setCsa] = React.useState({})
   const [error, setError] = React.useState({})
   const [tabValue, setTabValue] = React.useState(0)
+  const populate = [
+    "region",
+    "meeting_points",
+    "agricultores",
+    "coagricultores",
+    "workers",
+    "production_types",
+    "variations"
+  ]
 
   const retry = () => setError({})
 
@@ -27,7 +37,7 @@ const Csa = (props) => {
 
   const handleChange = (e, value) => setTabValue(value)
 
-  React.useEffect(() => request('get', `csas/${props.match.params.id}`, setCsa, handleError), [error])
+  React.useEffect(() => request('get', `csas/${props.match.params.id}`, setCsa, handleError, null, null, populate), [error])
 
   return(
     <div>
@@ -36,7 +46,7 @@ const Csa = (props) => {
         :
         csa.id ?
           <div>
-            <Banner title={`CSA ${csa.name}`} image={bannerImg}/>
+            <Banner title={`CSA ${csa.Name}`} image={bannerImg}/>
 
             <Tabs value={tabValue} onChange={handleChange}>
               <Tab label='Perfil' />

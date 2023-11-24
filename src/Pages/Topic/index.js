@@ -18,11 +18,12 @@ const Topic = (props) => {
   const [topic, setTopic] = React.useState({})
   const [reply, setReply] = React.useState(false)
   const [error, setError] = React.useState({})
+  const populate = "?populate[0]=routines&populate[1]=messages"
 
   const loadPage = (data) => {
     setReply(false)
     setTopic({})
-    request('get',`topics/${props.match.params.id}`, setTopic, setError)
+    request('get',`topics/${props.match.params.id}`, setTopic, setError, null, false, populate)
   }
   const retry = () => setError({})
 
@@ -52,11 +53,11 @@ const Topic = (props) => {
           <div style={{position: 'relative'}}>
             <header>
               <div className='content'>
-                <h2 style={styles.title}>{topic.name}</h2>
+                <h2 style={styles.title}>{topic.Name}</h2>
                 <div style={styles.routinesBox}>
                   <div style={styles.subinfo}>Práticas relacionadas a esse tema</div>
                   { topic.routines.map( (item, index) =>
-                    <Link style={styles.routines} to={`/rotinas/rotina/${item.id}`} key={index}>{item.name}</Link>
+                    <Link style={styles.routines} to={`/rotinas/rotina/${item.id}`} key={index}>{item.Name}</Link>
                   )}
                 </div>
               </div>
