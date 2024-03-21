@@ -36,7 +36,7 @@ const NewTopic = (props) => {
     if(relatedRoutines.length > 0){
       request('post', 'topics', handleData, handleError,
       {
-        name: topicName,
+        Name: topicName,
         routines: relatedRoutines,
         message: {
           text: firstMessage,
@@ -92,7 +92,7 @@ const NewTopic = (props) => {
                   :
                   routines? routines.map((routine, index)=>
                     <div key={index}>
-                      <Checkbox label={routine.name} onCheck={editRelatedRoutine(routine.id)} checked={props.location.state ? routine.id === props.location.state.id : false} />
+                      <Checkbox label={routine.Name} onCheck={editRelatedRoutine(routine.id)} checked={props.location.state ? routine.id === props.location.state.id : false} />
                     </div>
                   ):null}
               </Drawer>
