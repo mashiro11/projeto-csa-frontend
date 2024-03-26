@@ -1,8 +1,6 @@
-//const database = 'https://csa-strapi-backend.herokuapp.com/'
-const database = 'http://localhost:1337/api/'
-//const database = 'http://127.0.0.1:1337'
-
+const database = process.env.DATABASE_ADDRESS;
 const databaseRoute = (route) => {
+  console.log('database', database);
   return database + route
 }
 
