@@ -9,18 +9,6 @@ import Dropdown from '../../components/Dropdown'
 const Session1 = ({newCSA, setNewCSA, defaultData}) => {
   return(
     <div>
-      <div>Imagem aqui</div>
-      <div>Sobre a CSA</div>
-      <div>
-        <div>Nome:</div>
-        <div>
-          CSA
-          <input type='text' placeholder='Nome da CSA'
-          onChange={(e) => setNewCSA({...newCSA, name: e.target.value}) }
-          value={newCSA.name}/>
-        </div>
-      </div>
-
       <div>
         Agricultor
       </div>
@@ -93,10 +81,10 @@ const Session1 = ({newCSA, setNewCSA, defaultData}) => {
         {newCSA.regions.map((item, index) =>
           <Dropdown key={index}
             placeholder={'Selecione uma região'}
-            values={defaultData.regions ? defaultData.regions.map((region) => region.name ) : []}
+            values={defaultData.regions ? defaultData.regions.map((region) => region.Name ) : []}
             onClick={(name) => {
               let reg = newCSA.regions
-              reg[index] = defaultData.regions.find((region) => region.name === name).id
+              reg[index] = defaultData.regions.find((region) => region.Name === name).id
               setNewCSA({...newCSA, regions: reg})
             }}/>
         )}

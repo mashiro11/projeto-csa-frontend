@@ -2,9 +2,21 @@ import axios from 'axios'
 import { databaseRoute } from './database.js'
 
 const cookieToObj = (cookieString) => {
+  console.log('cookieString', cookieString);
   let temp = cookieString.split(';')
+  console.log('temp:', temp);
   let fields = temp.map(field => field.split('='))
-  return fields.reduce( (obj, field) => {return { ...obj, [field[0].trim(' ')]: field[1] }}, {} )
+  console.log('fields:', fields);
+  const result = fields.reduce( (obj, field) => {
+    const key = field[0].trim(' ');
+    if(obj[key]){
+      return obj;
+    }
+    else
+      return { ...obj, [key]: field[1] }
+    }, {} )
+  console.log('result:', result);
+  return result
 }
 
 const simplify = (rawData) => {
@@ -72,15 +84,19 @@ const simplify = (rawData) => {
  */
 
 const request = (method, path, handleData, handleError, payload, useHeaders, populate = "") => {
-  console.log('request:', method, path, payload)
+  const requestPayload = {data: payload}
+  console.log('request:', method, path, requestPayload)
+  const databaseURL = databaseRoute(path + populate);
+  console.log('fullDatabaseURL:', databaseURL)
+  const headers = {
+    Authorization: `Bearer ${cookieToObj(document.cookie).jwt}`
+  };
+  console.log('headers:', useHeaders? headers : null);
   axios({
     method: method,
-    url: databaseRoute(path + populate),
-    data: payload,
-    headers: useHeaders ?
-      {
-        Authorization: `Bearer ${cookieToObj(document.cookie).jwt}`
-      } : null
+    url: databaseURL,
+    data: requestPayload,
+    headers: useHeaders ? headers : null
   })
   .then( response => {
     console.log('response:', JSON.stringify(response.data.data, null, 2))

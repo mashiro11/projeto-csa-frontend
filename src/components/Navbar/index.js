@@ -55,7 +55,7 @@ const Navbar = ({user}) => {
           : null}
 
 {/*User button*/}
-          <Link to={user.username ? '/meus_dados' : '/cadastro'}>
+          <Link to={user.username ? '/meus_dados' : '/login'}>
             {user.username ?
               <img src='https://i.pravatar.cc/38' alt='user' className='avatar' />
               : <UserIcon />

@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { Link, Redirect } from 'react-router-dom'
-
 import request from '../../request.js'
 import { database } from '../../database.js'
 import UserContext from '../../UserContext.js'
+import IconedInput from 'components/IconedInput/index.js'
 
 const Login = ({setUser}) => {
   const [identifier, setIdentifier] = React.useState('')
@@ -40,20 +40,15 @@ const Login = ({setUser}) => {
   return(
     <div style={{position: 'relative'}}>
       <div style={{margin: '0 auto', width: '30%', backgroundColor: '#efefef', padding: 30}}>
-        <div>Login:</div>
+        <div>Bem vindo!</div>
+        <div>Ainda não tem um cadastro? <Link to="/cadastro">Crie seu login.</Link></div>
         { error.isAxiosError ?
             error.response.status === 400 ?
             <div style={{color: '#FF0000', fontSize: '12px'}}>Email ou senha inválidos</div> : null
           : null
         }
-        <div>
-          <input placeholder='Usuario ou email' type='text' value={identifier}
-            onChange={(e) => setIdentifier(e.target.value) }/>
-        </div>
-        <div>
-          <input placeholder='Senha' type='password' value={password}
-          onChange={(e) => setPassword(e.target.value) }/>
-        </div>
+        <IconedInput icon={"Email"} onChange={(e) => setIdentifier(e.target.value)} placeholder={'Usuario ou email'} value={identifier} />
+        <IconedInput icon={"Lock"} onChange={(e) => setPassword(e.target.value)} placeholder={'Senha'} value={password} type={'password'} />
         <button onClick={loginRequest}>Entrar</button>
         { error.isAxiosError ?
             error.response.status === 400 ?

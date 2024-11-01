@@ -5,6 +5,8 @@ import { Link, Redirect } from 'react-router-dom'
 import request from '../../request.js'
 import { database } from '../../database.js'
 import UserContext from '../../UserContext.js'
+import IconedInput from 'components/IconedInput/index.js'
+
 
 const Register = ({setUser}) => {
   const [email, setEmail] = React.useState('')
@@ -40,21 +42,15 @@ const Register = ({setUser}) => {
   return(
       <div style={{position: 'relative'}}>
         <div style={{margin: '0 auto', width: '30%', backgroundColor: '#efefef', padding: 30}}>
+          <div>
+            Bem Vindo!
+          </div>
           Cadastro:
           Já tem um perfil?
           <Link to='/login'>Faça Login</Link>
-          <div>
-            <input placeholder='E-mail' type='text' value={email}
-              onChange={(e) => setEmail(e.target.value) }/>
-          </div>
-          <div>
-            <input placeholder='Senha' type='password' value={password}
-            onChange={(e) => setPassword(e.target.value) }/>
-          </div>
-          <div>
-            <input placeholder='Confirme a senha' type='password' value={confirmation}
-            onChange={(e) => setConfirmation(e.target.value) }/>
-          </div>
+          <IconedInput icon="Email" placeholder='E-mail' type='text' value={email} onChange={(e) => setEmail(e.target.value) } />
+          <IconedInput icon="Lock" placeholder='Senha' type='password' value={password} onChange={(e) => setPassword(e.target.value) } /> 
+          <IconedInput icon="Lock" placeholder='Confirme a senha' type='password' value={confirmation} onChange={(e) => setConfirmation(e.target.value) } />
           <button onClick={signUpRequest}>CADASTRAR</button>
           {user.username ? <Redirect to='/' /> : null}
         </div>

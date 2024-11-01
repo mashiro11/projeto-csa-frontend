@@ -5,6 +5,7 @@ import request from '../../request.js'
 import UserContext from '../../UserContext'
 
 import StepSession from '../../components/StepSession'
+import Session0 from './Session0'
 import Session1 from './Session1'
 import Session2 from './Session2'
 import Session3 from './Session3'
@@ -16,13 +17,14 @@ import Session6 from './Session6'
 const CreateCSA = () => {
 
   const user = React.useContext(UserContext)
-  const [requested, setRequested] = React.useState(false)
   const [defaultData, setDefaultData] = React.useState({'regions': [], 'production-types': []})
   const [createdCSA, setCreatedCSA] = React.useState({})
+  const [step, setStep] = React.useState(0);
   const [newCSA, setNewCSA] = React.useState([
     {
-      name: '',
-      users: [user.id],
+      Name: '',
+    },
+    {
       agricultores: [{name:''}],
       trabalhadores: [{name:''}],
       df: true,
@@ -82,8 +84,21 @@ const CreateCSA = () => {
 
   const handleError = (error) => console.log('error:', error)
 
-  const createCSA = () => request('post', 'csas', setCreatedCSA, handleError, newCSA[0], true)
-  const updateCSA = (session) => request('put', `csas/${createdCSA.id}`, setCreatedCSA, handleError, newCSA[session], true)
+  const createCSA = () => {
+    request('post', 'csas', 
+      value => 
+      { 
+        setCreatedCSA(value)
+        setStep(step + 1)
+      }, handleError, newCSA[0], true)
+  }
+  const updateCSA = (session) => {
+    request('put', `csas/${createdCSA.id}`, 
+    value => {
+      setCreatedCSA(value)
+      setStep(step+1)
+    }, handleError, newCSA[session], true)
+  }
 
   const onComplete = () => {}
   const onCancel = () => {}
@@ -117,6 +132,7 @@ const CreateCSA = () => {
   return(
     <div>
       <StepSession
+        step={step} 
         nextButton='Avançar'
         previousButton='Voltar'
         lastNextButton='Concluir'
@@ -125,12 +141,13 @@ const CreateCSA = () => {
         onCancel={onCancel}
         onNext={(session) => session === 0 ? createCSA() : updateCSA(session)}
         onPrevious={onPrevious}>
-        <Session1 newCSA={newCSA[0]} setNewCSA={setState(0)} defaultData={defaultData}/>
-        <Session2 newCSA={newCSA[1]} setNewCSA={setState(1)} defaultData={defaultData}/>
-        <Session3 newCSA={newCSA[2]} setNewCSA={setState(2)} defaultData={defaultData}/>
-        <Session4 newCSA={newCSA[3]} setNewCSA={setState(3)} defaultData={defaultData}/>
-        <Session5 newCSA={newCSA[4]} setNewCSA={setState(4)} defaultData={defaultData}/>
-        <Session6 newCSA={newCSA[5]} setNewCSA={setState(5)} defaultData={defaultData}/>
+        <Session0 newCSA={newCSA[0]} setNewCSA={setState(0)} defaultData={defaultData}/>
+        <Session1 newCSA={newCSA[1]} setNewCSA={setState(1)} defaultData={defaultData}/>
+        <Session2 newCSA={newCSA[2]} setNewCSA={setState(2)} defaultData={defaultData}/>
+        <Session3 newCSA={newCSA[3]} setNewCSA={setState(3)} defaultData={defaultData}/>
+        <Session4 newCSA={newCSA[4]} setNewCSA={setState(4)} defaultData={defaultData}/>
+        <Session5 newCSA={newCSA[5]} setNewCSA={setState(5)} defaultData={defaultData}/>
+        <Session6 newCSA={newCSA[6]} setNewCSA={setState(6)} defaultData={defaultData}/>
       </StepSession>
       {/* newCSA.id ?
         <Redirect to={`/csas/csa/${newCSA.id}`} />
